@@ -121,16 +121,16 @@ const getNextAvailBagId = async (createdAt, startingId = null) => {
         startingId = getRandomStepBetween(222, 777, 11);
     }
 
-    let data = await db.min("bag_id")
+    let data = await db.min("bag_id as next_bag_id")
                        .from("washdays")
                        .whereRaw(`date(created_at) = '${dateCreatedAt}'`)
                        .andWhere("bag_id", ">", startingId)
                        .limit(1);
 
-    if (!data[0]["max(`bag_id`)"]) {
+    if (!data[0]["next_bag_id"]) {
         return startingId + 1;
     } else {
-        return data[0]["max(`bag_id`)"] + 1;
+        return data[0]["next_bag_id"] + 1;
     }
 };
 
