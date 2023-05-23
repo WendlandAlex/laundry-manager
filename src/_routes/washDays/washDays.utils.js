@@ -12,10 +12,7 @@ const {
 } = require("../../lib/moment-tz");
 
 const getPersonHavingBagId = async (createdAt, bagId) => {
-    let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(createdAt);
+    let dateCreatedAt = normalizeTime(createdAt).Date;
 
     // get the dates that have any events
     let data = await db.select("person_name")
@@ -32,10 +29,7 @@ const getPersonHavingBagId = async (createdAt, bagId) => {
 };
 
 const changePersonName = async (createdAt, oldPersonName, newPersonName) => {
-    let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(createdAt);
+    let dateCreatedAt = normalizeTime(createdAt).Date;
 
     let data = await db("washdays").update({ person_name: newPersonName })
                                    .where({
@@ -121,10 +115,7 @@ const getNextEventType = (lastEventType) => {
 };
 
 const getNextAvailBagId = async (createdAt, startingId = null) => {
-    let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(createdAt);
+    let dateCreatedAt = normalizeTime(createdAt).Date;
 
     if (!startingId) {
         startingId = getRandomStepBetween(222, 777, 11);
@@ -144,10 +135,7 @@ const getNextAvailBagId = async (createdAt, startingId = null) => {
 };
 
 const getBagsSplitFromThisBag = async (createdAt, bagId) => {
-    let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(createdAt);
+    let dateCreatedAt = normalizeTime(createdAt).Date;
 
     let data = await db.select("*")
                        .from("washdays")

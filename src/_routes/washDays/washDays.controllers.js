@@ -47,9 +47,7 @@ const renderWashdaysView = async (req, res, next) => {
 
     // decide whether we need to prompt the user to create a new wash day for today
     let todayActive;
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(getCurrentWashDay());
+    let dateCreatedAt = normalizeTime(getCurrentWashDay()).Date;
     for (let washday of data) {
         if (getWashDayFromMoment(washday.created_at) === dateCreatedAt) {
             todayActive = true;
@@ -132,9 +130,7 @@ const modifyPerson = async (req, res, next) => {
 };
 
 const renderEventForm = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
     let personName = req.query.personName.trim();
     let bagId = req.query.bagId ? req.query.bagId.trim() : null;
     let lastEventType = req.query.lastEventType ? req.query.lastEventType.trim() : null;
@@ -153,9 +149,7 @@ const renderEventForm = async (req, res, next) => {
 
 const renderBagForm = async (req, res, next) => {
     let bagId = req.params.bagId;
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
 
     let data = await getEvent("washdays", {
         bag_id: bagId
@@ -247,9 +241,7 @@ const renderModifyPersonForm = async (req, res, next) => {
 
 
 const insertEvent = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
     let personName = req.body.personName.trim();
     let bagId = req.body.bagId || null;
     let splitFromBagId = req.body.splitFromBagId || null;
@@ -345,9 +337,7 @@ const insertEvent = async (req, res, next) => {
 };
 
 const getEventsByPerson = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
     let personName = req.params.personName.trim();
 
     let data = await getEvent("washdays", {
@@ -369,9 +359,7 @@ const getEventsByPerson = async (req, res, next) => {
 };
 
 const getAllEventsByCreatedAtPersonOriented = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
     let sortColumn = req.query.bagsSortColumn || "person_name";
     let tileSize = req.query.tileSize || "small";
 
@@ -393,9 +381,7 @@ const getAllEventsByCreatedAtPersonOriented = async (req, res, next) => {
 };
 
 const getAllEventsByCreatedAtBagOriented = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
     let sortColumn = req.query.sortColumn || "person_name";
     let tileSize = req.query.tileSize || "small";
 

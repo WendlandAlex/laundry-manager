@@ -17,9 +17,7 @@ const {
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
 const renderUserAccessRequestForm = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt || getCurrentWashDay());
+    let dateCreatedAt= normalizeTime(req.params.createdAt || getCurrentWashDay()).Date;
 
     let redirectTo = req.query.redirectTo;
 
@@ -46,10 +44,7 @@ const submitUserAccessRequestForm = async (req, res, next) => {
         redirectTo
     } = req.body;
 
-    let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(createdAt);
+    let dateCreatedAt = normalizeTime(createdAt).Date;
 
     // if this login was a redirect from failing authenticateUserToken() middleware,
     // send them back to where they were trying to go

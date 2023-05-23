@@ -19,7 +19,8 @@ const {
 } = require("../auth/auth.utils");
 const {
     getCurrentTimestamp,
-    normalizeTime
+    normalizeTime,
+    getCurrentWashDay
 } = require("../../lib/moment-tz");
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
@@ -83,9 +84,7 @@ const renderApproveWashdayUsersForm = async (req, res, next) => {
 const submitApproveWashdayUsersForm = async (req, res, next) => {
     let approvedRequests = req.body;
     let adminUsername = res.locals.adminUsername;
-    let {
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(getCurrentTimestamp());
+    let timestampCreatedAt = normalizeTime(getCurrentTimestamp()).ISOString;
 
     let data = await authorizeUserRequestsById(Object.keys(approvedRequests), timestampCreatedAt, adminUsername);
 
@@ -93,9 +92,7 @@ const submitApproveWashdayUsersForm = async (req, res, next) => {
 };
 
 const renderWashdayAdminPanel = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
     let sortColumn = req.query.sortColumn || "person_name";
 
     let data = await getWashDays(dateCreatedAt);
@@ -125,9 +122,7 @@ const renderWashdayAdminPanel = async (req, res, next) => {
 };
 
 const modifyAllPeople = async (req, res, next) => {
-    let {
-        Date: dateCreatedAt,
-    } = normalizeTime(req.params.createdAt);
+    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
 
     let backupSheet = await copySheetToBackup({
                                                   sourceSpreadsheetId: spreadsheets.main.spreadsheetId,

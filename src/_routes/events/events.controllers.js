@@ -88,10 +88,7 @@ const insertOneEvent = async (req, res, next) => {
     let active = 1;
     let restarts = parseRestarted(req.body.restarted || 0);
     let errorCode = req.body.error_code || null;
-    let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(req.body.createdAt || getCurrentWashDay());
+    let timestampCreatedAt = normalizeTime(req.body.createdAt || getCurrentWashDay()).ISOString;
     let working = parseWorking(req.body.working || 0);
     let notes = req.body.notes || "";
 
