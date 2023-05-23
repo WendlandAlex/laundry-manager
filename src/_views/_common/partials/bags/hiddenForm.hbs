@@ -1,0 +1,121 @@
+<form method="POST" action="{{eventFormSubmitUrl}}">
+    <button class="
+        w-full
+        button-proceed
+        p-2
+        font-extrabold
+        border
+        rounded
+        shadow-md
+        text-white
+        bg-{{this.eventType.color}}
+        border-{{this.eventType.color}}
+    ">
+        {{{this.submitButtonText}}}
+    </button>
+    <!--
+            Hide the form and show only the button
+    -->
+    <div class="hidden">
+        <input class=""
+               id="personName"
+               type="textarea"
+               required="required"
+               rows="8"
+               name="personName"
+               value="{{{personName}}}"
+               placeholder="{{{personName}}}"
+        >
+
+        <input class=""
+               id="createdAt"
+               type="textarea"
+               rows="8"
+               name="createdAt"
+               required="required"
+               value="{{{createdAt}}}"
+               placeholder="{{{createdAt}}}"
+        >
+
+        <input class=""
+               type="text"
+               inputmode="numeric"
+               pattern="[0-9]*|null"
+               id="bagId"
+               name="bagId"
+               value="{{bagId}}"
+               placeholder="Bag ID (required for bag events)"
+        >
+
+        <!--
+                        TODO: make this good
+                        For a split, the event type is the same as the lastEventType of the parent bag
+                        For a merge, the event type is `other`
+                        FOR NOW we are going to give the merge event the event type of the parent, so that we can still have color coding of the post-merge tile
+        -->
+        {{#if (isNotNull this.mergeNoteText)}}
+            <select class=""
+                    id="eventType"
+                    name="eventType"
+                    required="required"
+                    value="{{this.eventType.eventTypeName}}"
+            >
+                <option value="{{this.eventType.eventTypeName}}">
+                </option>
+            </select>
+        {{else}}
+            <select class=""
+                    id="eventType"
+                    name="eventType"
+                    required="required"
+                    value="{{this.eventType.eventTypeName}}"
+            >
+                <option value="{{this.eventType.eventTypeName}}">
+                </option>
+            </select>
+        {{/if}}
+
+            <input class=""
+                   id="notes"
+                   type="textarea"
+                   name="notes"
+                   placeholder="Notes (optional)"
+        {{#if (isNotNull this.splitNoteText)}}
+                   value="{{{this.splitNoteText}}}"
+                   >
+
+                       <input type="checkbox"
+                              id="isSplitBagEvent"
+                              name="isSplitBagEvent"
+                              value="1"
+                              checked="checked"
+                       >
+        {{else if (isNotNull this.mergeNoteText)}}
+            value="{{{this.mergeNoteText}}}"
+            >
+
+            <input type="checkbox"
+                   id="isMergeBagEvent"
+                   name="isMergeBagEvent"
+                   value="1"
+                   checked="checked"
+            >
+        {{else}}
+            >
+        {{/if}}
+
+        <!--    split from bagId is always relevant
+                even for events that happen to a bag after it has been split, but before it merges
+                we need every split bag to track its parent so that it can merge at any time
+        -->
+        <input class=""
+               type="text"
+               inputmode="numeric"
+               pattern="[0-9]*|null"
+               id="splitFromBagId"
+               name="splitFromBagId"
+               value="{{splitFromBagId}}"
+        >
+
+    </div>
+</form>

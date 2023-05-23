@@ -1,0 +1,23 @@
+<div class="
+    rounded
+    border
+    border-gray-200
+    p-2
+    shadow
+">
+    <p class="
+        font-semibold
+        tracking-tight
+        bg-white
+        rounded
+    ">
+        Notes
+    </p>
+    {{#each this.notes}}
+        <div class="flex flex-col text-left justify-left">
+            <p class="">
+                {{this}}
+            </p>
+        </div>
+    {{/each}}
+</div>

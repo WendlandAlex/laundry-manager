@@ -1,0 +1,63 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="table-fixed w-full text-sm text-left text-gray-500">
+
+        {{#each chunkedTable}}
+            <!--            headers-->
+            <thead class="text-xs text-gray-700 uppercase">
+            <tr>
+                <td class="border-y px-6 py-4 text-right text-lg bg-neutral-50">
+                    {{this.laundryMoji}}
+                </td>
+                {{#each this.headerColumns}}
+                    <th scope="col"
+                        class="border-y border-collapse px-6 py-4 even:bg-neutral-50 odd:bg-neutral-50 text-sm font-semibold bg-white">
+                        {{this}}
+                    </th>
+                {{/each}}
+            </tr>
+            </thead>
+
+            <!--            chunk of rows-->
+            <!--            topRow-->
+            <tbody>
+            <tr class="bg-white border-b">
+                <td class="px-6 py-4 text-right text-base font-semibold bg-neutral-50">
+                    Top
+                </td>
+                {{#each this.topRow}}
+                    {{#if this}}
+                        <td class="px-6 py-4 even:bg-white odd:bg-gray-50 text-green-500 font-base">
+                            Working
+                        </td>
+                    {{else}}
+                        <td class="px-6 py-4 even:bg-white odd:bg-gray-50 text-red-500 font-base">
+                            Not Working
+                        </td>
+                    {{/if}}
+                {{/each}}
+            </tr>
+
+            <!--            bottomRow-->
+            <tr class="bg-white border-b">
+                <td class="px-6 py-4 text-right text-base font-semibold bg-neutral-50">
+                    Bottom
+                </td>
+                {{#each this.bottomRow}}
+                    {{#if this}}
+                        <td class="px-6 py-4 even:bg-white odd:bg-gray-50 text-green-500 font-base">
+                            Working
+                        </td>
+                    {{else}}
+                        <td class="px-6 py-4 even:bg-white odd:bg-gray-50 text-red-500 font-base">
+                            Not Working
+                        </td>
+                    {{/if}}
+                {{/each}}
+            </tr>
+            </tbody>
+
+        {{!-- add in some spacing between rows for readability --}}
+        {{!-- <tr class="block p-1"></tr> --}}
+        {{/each}}
+    </table>
+</div>

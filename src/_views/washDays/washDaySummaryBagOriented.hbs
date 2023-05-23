@@ -1,0 +1,44 @@
+{{> bags/bagStatusesChart}}
+{{> washDayViewsNavbar }}
+
+<!--toggle between sorting the bags in a status by id (de facto sort by time) or person_name-->
+<!--sorting person name puts bags belonging to the same person adjacent-->
+{{# if allowedSortColumns}}
+    <!--this partial requires context from the parent scope
+    to create parameterized urls, (e.g., /:createdAt/)
+    so we pass the whole view into this partial-->
+    {{> utility/sortColumnToggle this }}
+{{/if}}
+
+<div class="
+    flex
+    flex-col
+    ">
+    {{#each bags.statuses}}
+        <!--        tombstoned bags have a null status, so exclude them-->
+        {{#if (isNotNull this.[0].last_status)}}
+            <div class="
+                block
+                border
+                border-1
+                border-gray-200
+                rounded
+            ">
+                <p class="
+                    text-xl
+                    font-semibold
+                    bg-neutral-100
+                    p-2
+                    border-b
+                    border-gray-200
+                ">
+                    {{toTitleCase (snakeCaseToCamelCase (splitOnDelimiter @key "_" null))}}: {{arrayLength this}}
+                </p>
+
+                <div class="flex flex-row flex-wrap gap-1 p-1">
+                    {{> bags/bagTiles this}}
+                </div>
+            </div>
+        {{/if}}
+    {{/each}}
+</div>

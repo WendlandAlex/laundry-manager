@@ -1,0 +1,140 @@
+<div class="rounded border shadow border-gray-200">
+    <div class="row-span-1">
+        <div class="grid grid-cols-4 ">
+            <p class="
+            col-span-1
+            text-base
+            tracking-tight
+            m-2"
+            >
+                Dryer:
+            </p>
+
+            <p class="
+            col-span-3
+            text-base
+            tracking-tight
+            text-blue-600
+            rounded
+            bg-neutral-100
+            p-2
+            ">
+                {{this.column}} {{this.row}}
+            </p>
+        </div>
+
+
+        <div class="grid grid-cols-4">
+            <p class="
+            col-span-1
+            text-base
+            tracking-tight
+            m-2"
+            >
+                Date:
+            </p>
+
+            <p class="
+            col-span-3
+            text-base
+            tracking-tight
+            text-blue-600
+            rounded
+            bg-neutral-50
+            p-2
+            ">
+                {{dateFromISOString this.created_at}}
+            </p>
+        </div>
+
+        <div class="grid grid-cols-4">
+            <p class="
+            col-span-1
+            text-base
+            tracking-tight
+            m-2"
+            >
+                Working:
+            </p>
+
+            {{#if this.workingBool}}
+                <p class="
+              col-span-3
+              text-base
+              text-truncate
+              text-green-500
+              rounded
+              bg-neutral-100
+              p-2"
+                >
+                    True
+                </p>
+            {{else}}
+                <p class="
+              col-span-3
+              text-base
+              text-truncate
+              text-red-500
+              rounded
+              bg-neutral-100
+              p-2"
+                >
+                    False
+                </p>
+            {{/if}}
+        </div>
+
+        <div class="grid grid-cols-4">
+            <p class="
+            col-span-1
+            text-base
+            tracking-tight
+            m-2"
+            >
+                Error Code:
+            </p>
+
+            <p class="
+            col-span-3
+            text-base
+            tracking-tight
+            text-blue-600
+            rounded
+            bg-neutral-50
+            p-2
+            ">
+                {{#if this.error_code}}
+                    {{this.error_code}}
+                {{else}}
+                    None
+                {{/if}}
+            </p>
+        </div>
+
+        <div class="grid grid-cols-4">
+            <p class="
+            col-span-1
+            text-base
+            m-2"
+            >
+                Notes:
+            </p>
+
+            <p class="
+            col-span-3
+            text-base
+            text-truncate
+            text-blue-600
+            rounded
+            bg-neutral-100
+            p-2">
+                {{#if this.notes}}
+                    {{this.notes}}
+                {{else}}
+                    None
+                {{/if}}
+            </p>
+
+        </div>
+    </div>
+</div>

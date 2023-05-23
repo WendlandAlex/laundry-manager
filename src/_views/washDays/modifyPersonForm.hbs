@@ -1,0 +1,131 @@
+<main class="bg-white">
+    <div class="
+        bg-white
+        flex
+        flex-col
+        items-left
+        pl-2
+        py-2
+        border
+        border-gray-200
+        rounded
+        shadow
+    ">
+        <p class="
+        text-xl
+        font-semibold
+        tracking-tight
+        bg-white
+        rounded
+        px-2
+        mt-2
+        ">
+            Modify {{personName}}
+        </p>
+        <p class="
+        text-base
+        font-base
+        tracking-tight
+        bg-white
+        rounded
+        px-2
+        ">
+            To merge two people, enter<br/>a name that already exists
+        </p>
+    </div>
+
+    <form method="POST" action="{{modifyPersonFormSubmitUrl}}">
+        <div class="
+            bg-white
+            flex
+            flex-col
+            items-left
+            border
+            border-gray-200
+            rounded
+            shadow
+        ">
+            <div class="block py-2 px-4 rounded">
+                <label class="text-sm font-medium text-gray-900 "
+                       for="newPersonName">
+                    Name
+                </label>
+            </div>
+
+            <div class="block mx-2 rounded pb-2">
+                {{!-- prefill with /:personName --}}
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       id="newPersonName"
+                       type="textarea"
+                       required="required"
+                       rows="8"
+                       name="newPersonName"
+                    {{#if personName}}
+                       value="{{{personName}}}"
+                       placeholder="{{{personName}}}"
+                    {{else}}
+                       placeholder="Enter a person's name"
+                    {{/if}}
+                >
+                </input>
+            </div>
+
+        </div>
+
+        <div class="
+            bg-white
+            grid
+            grid-cols-2
+            justify-center
+            items-center
+            p-2
+            border
+            border-gray-200
+            rounded
+            shadow
+        ">
+            <button class="
+                    text-white
+                    font-extrabold
+                    py-2
+                    px-4
+                    bg-green-600
+                    border
+                    border-4
+                    border-white
+                    focus:ring-2
+                    rounded
+                    hover:bg-white
+                    hover:text-green-600
+                    hover:border-green-600
+                    ">
+                Submit
+            </button>
+
+            <button class="
+                    text-white
+                    font-extrabold
+                    py-2
+                    px-4
+                    bg-red-600
+                    border
+                    border-4
+                    border-white
+                    focus:ring-2
+                    rounded
+                    hover:bg-white
+                    hover:text-red-600
+                    hover:border-red-600
+                    ">
+                <a href="/washdays/{{createdAt}}/person/{{personName}}"
+                   class="">
+                    Cancel
+                </a>
+            </button>
+        </div>
+        </div>
+
+    </form>
+</main>
+
+<!--/washdays/2023-05-04/person/NewGuy-->

@@ -1,0 +1,44 @@
+{{#each this}}
+    <div class="
+                        rounded
+                        bg-white
+                        shadow
+                        border
+                        border-2
+                        px-2
+                        py-1
+                        {{#if (stringEquals this.last_status "bags_accepted")}}
+                                                border-red-500
+                        {{else if (stringEquals this.last_status "bags_washed")}}
+                                                border-sky-500
+                        {{else if (stringEquals this.last_status "bags_dried")}}
+                                                border-orange-500
+                        {{else if (stringEquals this.last_status "bags_completed")}}
+                                                border-green-500
+                        {{else if (stringEquals this.last_status "bags_delivered")}}
+                                                border-fuchsia-700
+                        {{else if (stringEquals this.last_status "other")}}
+                                                border-red-600
+                        {{else}}
+                                                border-gray-200
+                        {{/if}}
+                    ">
+        <a href="/washdays/{{this.created_at}}/bags/{{this.bag_id}}">
+            <p class="
+                            text-base
+                            font-semibold
+                            tracking-tight
+                        ">
+                ID: {{this.bag_id}}
+            </p>
+            <p class="
+                            text-base
+                            font-base
+                            tracking-tight
+                            truncate
+                        ">
+                {{this.person_name}}
+            </p>
+        </a>
+    </div>
+{{/each}}

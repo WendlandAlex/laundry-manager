@@ -1,0 +1,40 @@
+<div class="
+    rounded
+    grid
+    grid-cols-2
+    gap-1
+    px-2
+    py-1
+    ">
+    {{#each this}}
+        <!--        color code the border by last status-->
+        <!--        make each tile clickable -- on click go to the form(s) to move or split this bag-->
+        <a href="/washdays/{{this.[0].created_at}}/bags/{{this.[0].bag_id}}"
+           class="
+        items-center
+        leading-tight
+        block
+        rounded
+        bg-white
+        shadow
+        border
+        border-2
+        px-1
+        py-1
+        border-{{ lookup (getEventTypeByColumnName (getBagLastEvent this)) 'color' }}
+        ">
+            <p class="
+                        text-sm
+                        font-semibold
+                        tracking-tight
+                        bg-white
+                        rounded
+                    ">
+                {{@key}}
+            </p>
+
+            <!--color code the last status text-->
+            {{> lastEventTextSm (getEventTypeByColumnName (getBagLastEvent this))}}
+        </a>
+    {{/each}}
+</div>

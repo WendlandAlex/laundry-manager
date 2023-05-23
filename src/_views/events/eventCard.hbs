@@ -1,0 +1,116 @@
+<div class="bg-white flex flex-col items-left pl-2 py-2 border border-gray-200 rounded">
+    <p class="
+    text-2xl
+    font-semibold
+    bg-white
+    rounded
+    px-4
+    mt-1
+    tracking-tight"
+    >
+        Success!
+    </p>
+    <p class="
+    text-xl
+    font-semibold
+    bg-white
+    rounded
+    px-4
+    mb-1
+    tracking-tight"
+    >
+        Updated Dryer {{column}} {{row}}
+    </p>
+</div>
+
+<div class="bg-white border flex flex-col items-left px-4 py-2 border-gray-200 rounded">
+
+    <div class="block my-2 rounded">
+        <a class="
+        text-white
+        text-base
+        font-semibold
+        py-2
+        px-4
+        bg-orange-500
+        border
+        border-4
+        border-white
+        focus:ring-2
+        rounded
+        hover:bg-white
+        hover:text-orange-500
+        hover:border-orange-500"
+           href="{{eventsFormRenderUrl}}/?Column={{column}}&Row={{row}}"
+        >
+        Submit another event for this dryer&emsp;🛠️
+        </a>
+    </div>
+
+    <div class="block my-2 rounded">
+        <a class="
+        text-white
+        text-base
+        font-semibold
+        py-2
+        px-4
+        bg-blue-600
+        border
+        border-4
+        border-white
+        focus:ring-2
+        rounded
+        hover:bg-white
+        hover:text-blue-600
+        hover:border-blue-600"
+           href="/dryers/{{dryerId}}"
+        >
+            Return to this Dryer&emsp;📊
+        </a>
+    </div>
+
+    <div class="block my-2 rounded">
+        <a class="
+        text-white
+        text-base
+        font-semibold
+        py-2
+        px-4
+        bg-green-600
+        border
+        border-4
+        border-white
+        focus:ring-2
+        rounded
+        hover:bg-white
+        hover:text-green-600
+        hover:border-green-600"
+           href="/dryers"
+        >
+            Return to all Dryers&emsp;🌎
+        </a>
+    </div>
+
+</div>
+
+<div class="bg-white flex flex-row flex-wrap items-left p-2 border border-gray-200 rounded">
+    <h5 class="px-4 py-2 text-lg font-semibold text-gray-900">
+        Database updated
+    </h5>
+    <div class="bg-neutral-100 grid grid-cols-2 gap-2 p-2 w-full mx-4">
+        <div class="mb-1">
+            <pre class="text-green-700 px-2">{{jsonify dbResult}}</pre>
+        </div>
+    </div>
+
+    <h5 class="px-4 py-2 text-lg font-semibold text-gray-900">
+        Google sheets updated
+    </h5>
+    <div class="bg-neutral-100 grid grid-cols-2 gap-2 p-2 w-full mx-4">
+        <div class="mb-1">
+            <pre class="text-green-700 px-2">{{jsonify sheetsResult.data}}</pre>
+        </div>
+    </div>
+
+</div>
+</div>

@@ -1,0 +1,87 @@
+<div class="
+    bg-white
+    border
+    border-gray-200
+    rounded
+">
+    <p class="
+    text-xl
+    font-semibold
+    tracking-tight
+    bg-white
+    rounded
+    px-4
+    py-4"
+    >
+        Viewing {{ numDryers }} Dryers in 2 Rows&emsp;💫🪩
+    </p>
+</div>
+{{!-- <div class="grid grid-flow-row-dense gap-2 border border-gray-200 rounded sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"> --}}
+
+<div class="
+    bg-white
+    grid
+    sm:grid-cols-1
+    md:grid-cols-1
+    lg:grid-cols-1
+    xl:grid-cols-2
+    grid-flow-row
+    gap-1
+    ">
+
+    <ul>
+        {{#each dryers}}
+            <li>
+                <div class="rounded border shadow border-gray-200 hover:bg-gray-100">
+                    <a href="/dryers/{{this.dryer_id}}">
+                        <div class="p-2">
+                            <div class="grid grid-cols-3 items-baseline justify-items-start">
+                                <div class="col-span-1">
+                                    <h5 class="text-xl font-semibold tracking-tight text-gray-900">
+                                        Dryer {{this.column}}
+                                    </h5>
+
+                                    <h5 class="mb-1 text-xl font-semibold tracking-tight text-gray-900">
+                                        {{this.row}}
+                                    </h5>
+                                    {{#if this.working}}
+                                        <p class="mb-1 font-semibold tracking-tight text-green-500">
+                                            Working
+                                        </p>
+                                    {{else}}
+                                        <p class="mb-1 font-semibold text-red-500">
+                                            Not Working
+                                        </p>
+                                    {{/if}}
+                                </div>
+
+                                <div class="col-span-2">
+                                    <div class="grid grid-cols-2">
+                                        {{#if this.notes}}
+                                            {{#if this.error_codes}}
+                                                <div class="col-span-1">
+                                                    {{> lastNote}}
+                                                </div>
+                                                <div class="col-span-1">
+                                                    {{> dryers/errorCodes }}
+                                                </div>
+                                            {{else}}
+                                                <div class="col-span-2">
+                                                    {{> lastNote}}
+                                                </div>
+                                            {{/if}}
+                                        {{else if this.error_codes}}
+                                            <div class="col-span-2">
+                                                {{> dryers/errorCodes }}
+                                            </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </li>
+        {{/each}}
+    </ul>
+</div>

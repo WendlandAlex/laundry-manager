@@ -1,0 +1,186 @@
+<div class="
+            block
+            bg-gray-100
+            border
+            border-1
+            border-gray-200
+            rounded
+            p-2
+        ">
+    <p class="
+        text-lg
+        font-semibold
+        tracking-tight
+        ">
+        People
+    </p>
+</div>
+
+<div class="grid grid-cols-2">
+    <div class="
+                block
+                border
+                border-1
+                border-gray-200
+                rounded
+                px-2
+            ">
+        <div class="flex flex-col">
+            <p class="
+            text-lg
+            font-semibold
+            tracking-tight
+            text-green-500
+            ">
+                Complete
+            </p>
+            <p class="">
+                {{data.people.complete}}
+            </p>
+        </div>
+    </div>
+    <div class="
+                block
+                border
+                border-1
+                border-gray-200
+                rounded
+                px-2
+            ">
+        <div class="flex flex-col">
+            <p class="
+            text-lg
+            font-semibold
+            tracking-tight
+            text-red-500
+            ">
+                Incomplete
+            </p>
+            <p class="">
+                {{data.people.incomplete}}
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="
+            block
+            bg-gray-100
+            border
+            border-1
+            border-gray-200
+            rounded
+            p-2
+        ">
+    <p class="
+        text-lg
+        font-semibold
+        tracking-tight
+        ">
+        Bags
+    </p>
+</div>
+
+<div class="grid grid-cols-2">
+    {{#each data.statuses}}
+        <div class="
+            block
+            border
+            border-1
+            border-gray-200
+            rounded
+            px-2
+        ">
+            <div class="flex flex-col">
+                {{>lastEvent (getEventTypeByColumnName @key)}}
+                <p class="">
+                    {{this}}
+                </p>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+<div class="
+    border
+    border-gray-200
+    rounded
+    flex
+    flex-row
+    shadow
+    p-2
+    items-baseline
+    gap-4
+">
+    <form action="{{modifyAllPeopleFormSubmitUrl}}" method="post">
+        <input type="hidden" name="archiveAction" value="1">
+        <button type="submit"
+                id="archiveButton"
+                class="
+            bg-rose-500
+            text-white
+            font-bold
+            text-center
+            py-2
+            px-4
+            rounded
+        ">
+            ⚠️&emsp;Archive Wash Day {{createdAt}}&emsp;⚠️<br/><br>
+            This will anonymize all person names
+            Deanonymized data will be backed up
+        </button>
+    </form>
+</div>
+
+<div class="
+    border
+    border-gray-200
+    rounded
+    flex
+    flex-row
+    shadow
+    p-2
+    items-baseline
+    gap-4
+">
+    <form action="{{rebootRunningSystemFormSubmitUrl}}" method="post">
+        <input type="hidden" name="archiveAction" value="1">
+        <button type="submit"
+                id="archiveButton"
+                class="
+            bg-red-500
+            text-white
+            font-bold
+            text-center
+            py-2
+            px-4
+            rounded
+        ">
+            ☠️&emsp;Reboot Running System&emsp;☠️<br/><br>
+            This will stop all requests and reload the database from Google Sheets. Use this if you need to manually
+            manipulate the data to correct errors. Haters will say this feature is "a DOS vector" or "a bad idea".
+        </button>
+    </form>
+</div>
+
+<!--credit casuse I am not about to do this myself https://codepen.io/joonamakinen/pen/gOLNOqm?editors=101071-->
+<div class="hidden absolute inset-0 bg-gray-500 opacity-75 z-50" id="spinner">
+    <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+             class="bi bi-arrow-repeat animate-spin text-white" viewBox="0 0 16 16">
+            <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+            <path fill-rule="evenodd"
+                  d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+        </svg>
+    </div>
+</div>
+
+<script>
+    const button = document.getElementById("archiveButton");
+    const spinner = document.getElementById("spinner");
+
+    button.addEventListener("click", function () {
+        // Show spinner
+        spinner.classList.remove("hidden");
+    });
+</script>

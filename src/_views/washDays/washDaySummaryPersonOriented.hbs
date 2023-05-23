@@ -1,0 +1,72 @@
+{{> bags/bagStatusesChart }}
+{{> washDayViewsNavbar }}
+<div class="
+        bg-gray-100
+        border
+        border-gray-200
+        rounded
+        shadow
+">
+
+    <div class="grid grid-cols-2 border-gray-200 rounded">
+        <a href="{{eventFormUrl}}/?personName=New"
+           class="
+                bg-white
+                rounded
+                border
+                border-gray-200
+                p-2
+                font-semibold
+                text-start
+                align-bottom
+            ">
+            Add a New Person to this Wash Day<br/>({{createdAt}})
+        </a>
+        {{#if people.people}}
+            {{#each people.people}}
+                <div onclick="window.location.href='{{../getPersonUrl}}/{{@key}}'"
+                     class="
+                rounded
+                border
+                bg-white
+                border-gray-200
+                hover:bg-gray-100
+                hover:border-gray-600
+            ">
+                    <p class="
+                col-span-1
+                font-semibold
+                text-xl
+                px-2
+                pt-2
+            ">
+                        {{@key}}
+                    </p>
+
+                    {{#if (arrayIncludes ../people.peopleComplete @key)}}
+                        <p class="text-green-500 font-semibold px-2">Complete</p>
+                    {{else}}
+                        <p class="text-yellow-500 font-semibold px-2">Incomplete️</p>
+                    {{/if}}
+
+                    {{#if (arrayLength this.bagIds)}}
+                        {{> bags/bagsCondensed this.bags}}
+                    {{/if}}
+                </div>
+
+            {{/each}}
+            <a href="{{eventFormUrl}}/?personName=New"
+               class="
+           bg-white
+            rounded
+            border
+            border-gray-200
+            p-2
+            font-semibold
+            text-end
+            align-bottom
+        ">
+                Add a New Person to this Wash Day<br/>({{createdAt}})
+            </a>
+        {{/if}}
+    </div>

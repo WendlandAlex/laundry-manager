@@ -1,0 +1,21 @@
+{{#if (extractNotes this)}}
+    <p class="
+        font-semibold
+    ">
+        Notes
+    </p>
+    <div class="flex flex-col">
+        {{#each (extractNotes this)}}
+            <p class="
+                        tracking-tight
+                        bg-gray-100
+                        border
+                        border-gray-200
+                        p-1
+                        rounded
+                    ">
+                {{this}}
+            </p>
+        {{/each}}
+    </div>
+{{/if}}

@@ -1,0 +1,72 @@
+<!--toggle between `person oriented` and `bag oriented` views of the events-->
+<div class="
+    flex
+    flex-row
+    justify-around
+    p-1
+    gap-1
+    bg-gray-100
+">
+    <button onclick="window.location.href='/washdays/{{this.createdAt}}/personOriented/?sortColumn=person_name'"
+            class="
+            flex-grow
+            btn
+            w-max
+            border
+            border-gray-200
+            bg-white
+            hover:bg-blue-600
+            text-gray-900
+            hover:text-white
+            font-semibold
+            tracking-tight
+            py-2
+            px-4
+            rounded
+        ">
+        People View
+    </button>
+
+    <button onclick="window.location.href='/washdays/{{this.createdAt}}/bagOriented/?sortColumn=person_name'"
+            class="
+            flex-grow
+            btn
+            w-max
+            border
+            border-gray-200
+            bg-white
+            hover:bg-blue-600
+            text-gray-900
+            hover:text-white
+            font-semibold
+            tracking-tight
+            py-2
+            px-4
+            rounded
+        ">
+        Bag View
+    </button>
+
+
+    {{#if userHasAdminToken}}
+        <button onclick="window.location.href='/admin/washdays/{{this.createdAt}}'"
+                class="
+            flex-grow
+            btn
+            w-max
+            border
+            border-gray-200
+            bg-white
+            hover:bg-blue-600
+            text-gray-900
+            hover:text-white
+            font-semibold
+            tracking-tight
+            py-2
+            px-4
+            rounded
+        ">
+            Admin
+        </button>
+    {{/if}}
+</div>

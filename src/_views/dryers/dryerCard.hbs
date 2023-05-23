@@ -1,0 +1,151 @@
+<div class="bg-white flex flex-col items-left pl-2 py-2 border border-gray-200 rounded">
+    <p class="
+    text-xl
+    font-semibold
+    bg-white
+    rounded
+    mx-2"
+    >
+        Dryer {{dryer.column}} {{dryer.row}}
+    </p>
+    {{#if dryer.working}}
+        <p class="text-xl px-2 font-bold tracking-tight text-green-500">
+            {{workingify dryer.working}}
+        </p>
+    {{else}}
+        <p class="text-xl px-2 font-bold tracking-tight text-red-500">
+            {{workingify dryer.working}}
+        </p>
+    {{/if}}
+</div>
+
+{{#if dryer.notes}}
+    <div class="bg-white border border-gray-200 rounded-lg shadow-md flex flex-row flex-wrap gap-2">
+        <div class="pl-2 py-2">
+            <p class="
+      text-xl
+      font-semibold
+      rounded
+      px-2"
+            >
+                Notes
+            </p>
+            <ul>
+                {{#each dryer.notes}}
+                    <div class="
+        grid
+        grid-cols-4
+        gap-2
+        items-baseline
+        px-2
+        py-1
+      ">
+                        <p class="
+          col-span-1
+          text-base
+          ">
+                            {{dateFromISOString this.created_at}}
+                        </p>
+                        <div class="
+          col-span-3
+          rounded
+          border
+          shadow
+        border-gray-200
+        even:bg-gray-100
+        odd:bg-neutral-100
+          text-blue-600
+          px-2
+        ">
+                            {{this.note}}
+                        </div>
+                    </div>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+{{/if}}
+
+{{#if dryer.error_codes}}
+    <div class="bg-white border border-gray-200 rounded-lg shadow-md flex flex-row flex-wrap gap-2">
+        <div class="pl-2 py-2">
+            <p class="
+      text-xl
+      font-semibold
+      rounded
+      px-2"
+            >
+                Error<br/>codes
+            </p>
+            <ul>
+                {{#each dryer.error_codes}}
+                    <div class="
+          grid
+          grid-cols-4
+          gap-2
+          items-baseline
+          px-2
+          py-1
+        ">
+                        <p class="
+            col-span-1
+            text-base
+            tracking-tight
+          ">
+                            {{dateFromISOString this.created_at}}
+                        </p>
+                        <div class="
+            col-span-3
+            rounded
+            border
+            shadow
+          border-gray-200
+          even:bg-gray-100
+          odd:bg-neutral-100
+            text-blue-600
+            px-2
+          ">
+                            {{this.error_code}}
+                        </div>
+                    </div>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    </div>
+{{/if}}
+
+<div class="
+bg-white
+  border
+border-gray-200
+  rounded
+  shadow
+  ">
+    <div class="
+      block
+      my-4
+      px-2
+      rounded
+    ">
+        <a class="
+      text-white
+      text-base
+      font-semibold
+      py-2
+      px-4
+      bg-orange-400
+      border
+      border-4
+      border-white
+      focus:ring-2
+      rounded
+      hover:bg-white
+      hover:text-orange-400
+      hover:border-orange-400"
+           href="{{eventFormRedirectUrl}}/?column={{dryer.column}}&row={{dryer.row}}"
+        >
+        Submit an Event for this Dryer&emsp;✨🫧
+        </a>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="
+    rounded
+    flex
+    flex-row
+    flex-wrap
+    gap-1
+    ">
+    {{#each this}}
+        <!--        color code the border by last status-->
+        <div class="
+                rounded
+                bg-white
+                shadow
+                border
+                border-2
+                px-2
+                py-1
+                gap-2
+                border-{{ lookup (getEventTypeByColumnName (getBagLastEvent this)) 'color' }}
+            ">
+            <!--                make each tile clickable -- on click go to the form(s) to move or split this bag-->
+            <div class="">
+                <a href="/washdays/{{this.[0].created_at}}/bags/{{this.[0].bag_id}}">
+                    <p class="
+                        text-base
+                        font-semibold
+                        tracking-tight
+                        bg-white
+                        rounded
+                    ">
+                        Bag ID: {{@key}}
+                    </p>
+
+                    <!--color code the last status text-->
+                    {{> lastEvent (getEventTypeByColumnName (getBagLastEvent this))}}
+
+                    <!--render notes if there are any-->
+                    {{> bags/bagAllNotes this}}
+
+                </a>
+            </div>
+        </div>
+    {{/each}}
+</div>

@@ -1,0 +1,31 @@
+<!--toggle between `person oriented` and `bag oriented` views of the events-->
+<div class="
+    flex
+    flex-row
+    justify-around
+    p-1
+    gap-1
+    bg-gray-100
+">
+    {{#each this.allowedSortColumns}}
+        <button onclick="window.location.href='{{../req.baseUrl}}{{../req.path}}?sortColumn={{this}}'"
+        class="
+        flex-grow
+        btn
+        w-max
+        border
+        border-gray-200
+        bg-white
+        hover:bg-blue-600
+        text-gray-900
+        hover:text-white
+        font-semibold
+        tracking-tight
+        py-2
+        px-4
+        rounded
+        ">
+        Sort by {{toTitleCase (splitOnDelimiter this "_" null)}}
+        </button>
+    {{/each}}
+</div>

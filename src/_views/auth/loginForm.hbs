@@ -1,0 +1,81 @@
+<main class="bg-white">
+
+    <form method="POST" action="{{submitUserLoginFormUrl}}">
+        <div class="
+            bg-white
+            flex
+            flex-col
+            items-left
+            border
+            border-gray-200
+            rounded
+            shadow
+        ">
+            <p class="
+                text-xl
+                font-semibold
+                tracking-tight
+                bg-white
+                rounded
+                p-4
+            ">
+                Admin approval required
+            </p>
+
+            <div class="block px-4 rounded">
+                <label class="text-sm font-medium text-gray-900 "
+                       for="userUsername">
+                    Username
+                </label>
+            </div>
+
+            <div class="block rounded p-2">
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       id="userUsername"
+                       type="textarea"
+                       required="required"
+                       rows="8"
+                       name="userUsername"
+                >
+            </div>
+
+            <div class="block px-4 rounded">
+                <label class="text-sm font-medium text-gray-900 "
+                       for="createdAt">
+                    Wash Day
+                </label>
+            </div>
+            <div class="block rounded p-2">
+                {{!-- prefill with /:createdAt --}}
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       id="createdAt"
+                       type="textarea"
+                       required="required"
+                       rows="8"
+                       name="createdAt"
+                       value="{{createdAt}}"
+                >
+            </div>
+
+            <button class="
+                        my-4
+                        mx-1
+                        text-white
+                        font-extrabold
+                        py-4
+                        bg-green-600
+                        border
+                        border-4
+                        border-white
+                        focus:ring-2
+                        rounded-lg
+                        hover:bg-white
+                        hover:text-green-600
+                        hover:border-green-600
+                        ">
+                Request Access
+            </button>
+
+        </div>
+    </form>
+</main>

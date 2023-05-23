@@ -1,0 +1,199 @@
+<main class="bg-white">
+    <div class="
+        bg-white
+        flex
+        flex-col
+        items-left
+        pl-2
+        py-2
+        border
+        border-gray-200
+        rounded
+        shadow
+    ">
+        <p class="
+        text-xl
+        font-semibold
+        tracking-tight
+        bg-white
+        rounded
+        px-2
+        my-2"
+        >
+            {{#if personName}}
+                {{#if (stringEquals personName "New")}}
+                    Add a New Person to this Wash Day
+                {{else}}
+                    {{#if bagId}}
+                        {{#if (isNumeric bagId)}}
+                            Submit an Event for Bag ID {{bagId}} for {{personName}}
+                            <!--                        If we are manipulating ?bagId="" querystring to manipulate the placeholder (e.g., bagId collision warning) then ignore this-->
+                        {{else}}
+                            Submit an Event for {{personName}}
+                        {{/if}}
+                    {{else}}
+                        Submit an Event for {{personName}}
+                    {{/if}}
+                {{/if}}
+            {{else}}
+                Submit a New Event
+            {{/if}}
+        </p>
+    </div>
+
+    <form method="POST" action="{{eventFormSubmitUrl}}">
+        <div class="
+            bg-white
+            flex
+            flex-col
+            items-left
+            border
+            border-gray-200
+            rounded
+            shadow
+        ">
+            <div class="block mx-2 px-2 py-2 rounded">
+                <label class="my-2 ml-2 text-sm font-medium text-gray-900 "
+                       for="personName">
+                    Person
+                </label>
+            </div>
+
+            <div class="block mx-2 px-3 rounded">
+                {{!-- prefill with ?personName="" --}}
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       id="personName"
+                       type="textarea"
+                       required="required"
+                       rows="8"
+                       name="personName"
+                    {{#if personName}}
+                        {{#if (stringEquals personName "New")}}
+                       placeholder="Enter a person's name"
+                        {{else}}
+                       value="{{{personName}}}"
+                       placeholder="{{{personName}}}"
+                        {{/if}}
+                    {{else}}
+                       placeholder="Enter a person's name"
+                    {{/if}}
+                >
+                </input>
+            </div>
+
+            <div class="block mx-2 px-2 py-2 rounded">
+                <label class="my-2 ml-2 text-sm font-medium text-gray-900 "
+                       for="createdAt">
+                    Wash Day
+                </label>
+            </div>
+            <div class="block mx-2 px-3 rounded">
+                {{!-- prefill with ?createdAt="" --}}
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       id="createdAt"
+                       type="textarea"
+                       rows="8"
+                       name="createdAt"
+                       required="required"
+                       value="{{{createdAt}}}"
+                       placeholder="{{{createdAt}}}"
+                >
+                </input>
+            </div>
+
+            <div class="block mx-2 px-2 py-2 rounded">
+                <label class="my-2 ml-2 text-sm font-medium text-gray-900 "
+                       for="bagId">
+                    Bag ID
+                </label>
+            </div>
+            <div class="block mx-2 px-2 py-2 rounded">
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       type="text"
+                       inputmode="numeric"
+                       pattern="[0-9]*|null"
+                       id="bagId"
+                       name="bagId"
+                    {{#if bagId}}
+                       value="{{bagId}}"
+                    {{/if}}
+                       placeholder="Bag ID (required for bag events)"
+                >
+                </input>
+            </div>
+
+            <div class="block mx-2 p-2 rounded">
+                <label for="eventType"
+                       class="
+                    my-2
+                    ml-2
+                    text-sm
+                    font-medium
+                    text-gray-900
+                    ">
+                    Event Type
+                </label>
+            </div>
+            <div class="block mx-2 px-3">
+                <select class="px-2 h-12 text-sm font-medium text-gray-900 rounded"
+                        id="eventType"
+                        name="eventType"
+                        required="required"
+                    {{#if lastEventType}}
+                        value="{{lastEventType}}"
+                    {{/if}}
+                >
+                    {{#each eventTypes}}
+                        <option value="{{this.eventTypeName}}" {{preselectSelect this.eventTypeName
+                                                                                 ../lastEventType}}>{{this.friendlyName}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="block mx-2 px-2 py-2 rounded">
+                <label class="w-full my-2 ml-2 text-sm font-medium text-gray-900 "
+                       for="notes">
+                    Notes
+                </label>
+                <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                       id="notes"
+                       type="textarea"
+                       rows="8"
+                       name="notes"
+                       placeholder="Notes (optional)"
+                >
+            </div>
+
+        </div>
+
+        <div class="
+            bg-white
+            flex
+            flex-col
+            items-left
+            py-2
+            border
+            border-gray-200
+            rounded
+            shadow
+        ">
+            <div class="block m-2 px-2 pb-2 rounded">
+                <button class="
+                    text-white
+                    font-extrabold
+                    py-2
+                    px-4
+                    bg-orange-400
+                    focus:ring-2
+                    rounded
+                    hover:bg-white
+                    hover:text-orange-400
+                    hover:border-orange-400
+                    ">
+                    Submit&emsp;🪄📋
+                </button>
+            </div>
+        </div>
+        </div>
+    </form>
+</main>

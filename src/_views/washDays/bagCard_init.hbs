@@ -1,0 +1,161 @@
+{{> bags/bagStatusesChart}}
+<div class="bg-gray-100 flex flex-col">
+    <div class="
+        bg-white
+        rounded
+        shadow
+        border
+        border-gray-200
+    ">
+
+        <div class="
+            p-4
+        ">
+            <p class="
+                text-lg
+                font-semibold
+                tracking-tight
+                text-gray-900
+            ">
+                Start a bag at <span class="text-{{eventTypes.[0].color}}">{{toTitleCase
+                    eventTypes.[0].pastTenseVerb}}</span>?
+            </p>
+        </div>
+
+
+        <form method="POST" action="{{eventFormSubmitUrl}}">
+            <div class="
+            bg-white
+            flex
+            flex-col
+            items-left
+        ">
+                <div class="flex flex-row items-center px-4 gap-1">
+                    <div class="rounded">
+                        <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                               id="personName"
+                               type="textarea"
+                               required="required"
+                               rows="8"
+                               name="personName"
+                               placeholder="Person name"
+                        >
+                    </div>
+
+                    <div>
+                        <input class="hidden"
+                               id="createdAt"
+                               type="textarea"
+                               rows="8"
+                               name="createdAt"
+                               required="required"
+                               value="{{{createdAt}}}"
+                               placeholder="{{{createdAt}}}"
+                        >
+                    </div>
+
+                    <div class="rounded">
+                        <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                               type="text"
+                               inputmode="numeric"
+                               pattern="[0-9]*|null"
+                               id="bagId"
+                               name="bagId"
+                            {{#if bagId}}
+                               value="{{bagId}}"
+                            {{/if}}
+                               placeholder="Bag ID"
+                        >
+                    </div>
+                </div>
+
+
+                <div>
+                    <input class="hidden"
+                           type="text"
+                           id="eventType"
+                           name="eventType"
+                           required="required"
+                           value="{{eventTypes.[0].eventTypeName}}"
+                    >
+                </div>
+
+                <div class="block mx-2 px-2 py-2 rounded">
+                    <input class="block w-full p-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                           id="notes"
+                           type="textarea"
+                           rows="8"
+                           name="notes"
+                           placeholder="Notes (optional)"
+                    >
+                </div>
+
+                <div class="block m-2 px-2 pb-2 rounded">
+                    <button class="
+                        w-full
+                        text-white
+                        font-extrabold
+                        p-4
+                        bg-{{eventTypes.[0].color}}
+                        rounded
+                        hover:bg-white
+                        hover:text-{{eventTypes.[0].color}}
+                        hover:border-{{eventTypes.[0].color}}
+                        ">
+                        Accept
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+
+        <div class="
+            bg-white
+            flex
+            flex-row
+            gap-1
+            justify-around
+            p-2
+        ">
+            <a href="/washdays/{{createdAt}}/personOriented"
+               class="
+                    w-full
+                    p-2
+                    font-extrabold
+                    text-center
+                    border
+                    border-4
+                    focus:ring-2
+                    rounded
+                    bg-blue-600
+                    text-white
+                    border-blue-600
+                    hover:bg-white
+                    hover:text-blue-600
+                ">
+                Return to People
+            </a>
+
+            <a href="/washdays/{{createdAt}}/bagOriented"
+               class="
+                    w-full
+                    p-2
+                    font-extrabold
+                    text-center
+                    border
+                    border-4
+                    focus:ring-2
+                    rounded
+                    bg-red-600
+                    text-white
+                    border-red-600
+                    hover:bg-white
+                    hover:text-red-600
+                ">
+                Return to Bags
+            </a>
+        </div>
+
+    </div>
+</div>

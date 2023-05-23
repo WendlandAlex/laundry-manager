@@ -1,0 +1,36 @@
+<div class="rounded border shadow border-gray-200">
+    <div class="row-span-1">
+        {{#each this}}
+            {{#if this}}
+                {{#unless (arrayIncludes @key "active" "person_name" "id")}}
+                    <div class="grid grid-cols-3 ">
+                        <p class="
+                            col-span-1
+                            text-base
+                            tracking-tight
+                            m-2"
+                        >
+                            {{toTitleCase (splitOnDelimiter @key "_" null)}}:
+                        </p>
+
+                        <p class="
+                            col-span-2
+                            text-base
+                            tracking-tight
+                            text-blue-600
+                            rounded
+                            bg-neutral-100
+                            p-2
+                        ">
+                            {{#unless (stringEquals @key "created_at")}}
+                                {{this}}
+                            {{else}}
+                                {{humanTimeFromISOString this}}
+                            {{/unless}}
+                        </p>
+                    </div>
+                {{/unless}}
+            {{/if}}
+        {{/each}}
+    </div>
+</div>

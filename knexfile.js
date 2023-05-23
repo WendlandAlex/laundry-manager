@@ -1,0 +1,15 @@
+require('dotenv').config()
+const {db} = require('./config')
+
+// Update with your config settings.
+
+/**
+ * @type { Object.<string, import("knex").Knex.Config> }
+ */
+module.exports = {
+  development: {
+    client: 'sqlite3',
+    connection: db.connection,
+    useNullAsDefault: true
+  }
+};

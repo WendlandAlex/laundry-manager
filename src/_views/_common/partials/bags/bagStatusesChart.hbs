@@ -1,0 +1,50 @@
+<div class="
+        bg-white
+        py-2
+        border
+        border-gray-200
+        rounded
+        shadow
+    ">
+    <!--<div class="flex-grow grid grid-cols-5 gap-2 px-1 content-baseline text-center">-->
+    <div class="
+        flex
+        flex-row
+        flex-grow
+        gap-1.5
+        px-2
+        justify-center
+        content-center
+        text-center
+        items-center
+        w-full
+    ">
+        {{#each eventTypes}}
+            <div class="
+                rounded
+                bg-white
+                border
+                border-2
+                px-1
+                py-2
+                border-{{this.color}}
+            ">
+                <p class="
+                        text-xs
+                        font-semibold
+                        tracking-tight
+                        text-{{this.color}}
+                        bg-white
+                        rounded
+                        break-words
+                ">
+                    {{toTitleCase this.verb}}
+                </p>
+            </div>
+
+            {{#unless @last}}
+                <p>></p>
+            {{/unless}}
+        {{/each}}
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="grid grid-rows-auto">
+
+    {{> bags/bagStatusesChart}}
+
+    {{#unless todayActive}}
+        <a href="{{initWashDayUrl}}?createdAt={{createdAt}}"
+        class="
+        bg-rose-600
+        rounded
+        px-12
+        py-4
+        mx-4
+        my-4
+        hover:bg-white
+        hover:text-rose-600
+        ">
+        <div class="
+                text-xl
+                font-semibold
+                text-white
+            ">
+            Start a Wash Day for Today ({{createdAt}})
+        </div>
+        </a>
+    {{/unless}}
+
+    {{#each washDays}}
+        {{> washdayWashdayListCard}}
+    {{/each}}
+</div>

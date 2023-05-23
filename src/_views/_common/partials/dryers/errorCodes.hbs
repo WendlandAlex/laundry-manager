@@ -1,0 +1,24 @@
+{{#if this.error_codes}}
+    <div class="">
+
+        <h5 class="text-base font-bold tracking-tight text-gray-900">
+            Error Codes
+        </h5>
+
+        <ul role="list">
+            {{#each this.error_codes_summary}}
+                <li>
+                    <div class="flex flex-cols justify-left gap-4 mr-8">
+
+                        <p class="text-semibold text-gray-700">{{@key}}</p>
+
+                        <div class="block border rounded-lg px-1">
+                            <p class="text-monospace text-center text-blue-600">{{this}}</p>
+                        </div>
+
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}

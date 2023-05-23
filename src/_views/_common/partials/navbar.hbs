@@ -1,0 +1,143 @@
+<nav id="navbar" class="bg-white">
+
+    {{!-- statics row --}}
+    <div class="
+        grid
+        grid-rows-2
+        grid-cols-6
+        items-center
+    ">
+
+        {{!-- logo image --}}
+        <div class="col-span-1 row-span-1 row-start-1">
+            <a href="/" class="">
+                <img src="/headerImage.png" class="scale" alt="{{organization.shortName}} Logo"/>
+            </a>
+        </div>
+
+        {{!-- title text --}}
+        <div class="col-span-4 row-start-1 items p-1">
+            <div class="">
+                {{#if userHasAdminToken}}
+                    <a href="/admin">
+                        <div class="
+                        text-xl
+                        font-semibold
+                        text-rose-600
+                        border
+                        border-2
+                        border-rose-600
+                        rounded
+                        hover:bg-rose-600
+                        hover:text-white
+                        text-center
+                    ">
+                            Admin
+                        </div>
+                    </a>
+                {{else}}
+                    <h1 class="
+                    text-xl
+                    text-left
+                    tracking-tight
+                    justify-left
+                    font-semibold
+                    ">
+                        {{organization.name}} @ {{laundromat.name}}
+                    </h1>
+                {{/if}}
+            </div>
+        </div>
+
+        {{!-- links row --}}
+        {{!-- AKA full row --}}
+        <div class="
+            row-start-2
+            col-span-6
+            rounded
+        ">
+
+            {{!-- one button per table row of Dashboard, ideally --}}
+            <div class="
+                flex
+                flex-row
+                justify-around
+                items-center
+                rounded
+            ">
+                <a href="/dashboard" aria-current="page" class="
+                    rounded
+                    hover:bg-neutral-50
+                ">
+                    <div class="
+                        text-base
+                        font-semibold
+                        text-left
+                        tracking-tight
+                        hover:text-blue-600
+                        hover:border-blue-600
+                        px-2
+                        py-1
+                        ">
+                        Dryer<br/>Dashboard
+                    </div>
+                </a>
+
+                <a href="/dryers" aria-current="page" class="
+                    rounded
+                    hover:bg-neutral-50
+                ">
+                    <div class="
+                        text-base
+                        font-semibold
+                        tracking-tight
+                        text-left
+                        hover:text-blue-600
+                        hover:border-blue-600
+                        px-2
+                        py-1
+                        ">
+                        Dryer<br/>Details
+                    </div>
+                </a>
+
+                <a href="/events/all" aria-current="page" class="
+                    rounded
+                    hover:bg-neutral-50
+                ">
+                    <div class="
+                        text-base
+                        font-semibold
+                        tracking-tight
+                        text-left
+                        hover:text-blue-600
+                        hover:border-blue-600
+                        px-2
+                        py-1
+                        ">
+                        Dryer<br/>Events
+                    </div>
+                </a>
+
+                <div>🫧<br/>✨</div>
+                <a href="/washdays" aria-current="page" class="
+                    rounded
+                    hover:bg-neutral-50
+                ">
+                    <div class="
+                        text-base
+                        font-semibold
+                        tracking-tight
+                        text-left
+                        hover:text-blue-600
+                        hover:border-blue-600
+                        py-1
+                        ">
+                        Wash<br/>Day
+                    </div>
+                </a>
+                <div>✨<br/>🫧</div>
+            </div>
+        </div>
+    </div>
+</nav>
