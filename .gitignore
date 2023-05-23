@@ -1,0 +1,16 @@
+/node_modules/
+yarn.lock
+yarn-error.log
+node_modules
+*credentials*json*
+*token*json*
+../db
+../db/**
+*.db
+**.db
+*.env
+fly.toml
+public/**
+!public/input.css
+!public/output.css
+!headerImage.png.example
