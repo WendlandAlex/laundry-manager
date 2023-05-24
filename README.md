@@ -32,7 +32,19 @@ This repo contains configuration files for deploying to [fly.io](https://fly.io)
 
 On a system with `flyctl` installed, copy `fly.toml.example` to `fly.toml` and fill in your desired app name and region.
 
-Then run `fly deploy --strategy immediate` in the project root to deploy to `${your app name}.fly.dev`. There is no need to use a rolling deployment strategy because the sqlite backend only supports running one instance of the app at a time.
+Then run the deploy command in the project root to deploy to `${your app name}.fly.dev`.
+```shell
+# if this is the first deploy of a new app
+fly launch
+
+# if this is an update to a deployed app
+fly deploy --strategy immediate
+```
+
+Fly provisions 2 nodes by default when launching an app for the first time. Immediately deprovision 1 so that you don't have inconsistency.
+```shell
+fly scale count 1
+```
 
 There are no major design decisions that couple the app to `fly.io` infrastructure. The `Dockerfile` can be used to build a container image for any platform.
 
