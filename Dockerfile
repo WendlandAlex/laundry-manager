@@ -32,6 +32,7 @@ COPY --link . .
 # Remove development dependencies
 RUN yarn install --production=true
 
+RUN npx tailwindcss --input public/input.css --output public/output.css
 
 # Final stage for app image
 FROM base

@@ -112,8 +112,6 @@ const spreadsheets = {
 };
 
 const google = {
-    keyfilePath: path.join(process.cwd(), process.env.GOOGLE_KEYFILE),
-    tokenPath: path.join(process.cwd(), process.env.GOOGLE_TOKEN),
     scope_auth: "https://www.googleapis.com/auth/cloud-platform",
     scope_sheets: (process.env.GOOGLE_READONLY === "false") ? "https://www.googleapis.com/auth/spreadsheets" : "https://www.googleapis.com/auth/spreadsheets.readonly",
 };
@@ -160,7 +158,8 @@ const bags = {
             friendlyName: "Bags accepted",
             verb: "accept",
             pastTenseVerb: "accepted",
-            color: "red-500"
+            color: "red-500",
+            colorHex: "#EF4444"
         },
         wash: {
             columnName: "bags_washed",
@@ -168,7 +167,8 @@ const bags = {
             friendlyName: "Bags washing",
             verb: "wash",
             pastTenseVerb: "washed",
-            color: "sky-500"
+            color: "sky-500",
+            colorHex: "#0ea5e9"
         },
         dry: {
             columnName: "bags_dried",
@@ -176,7 +176,8 @@ const bags = {
             friendlyName: "Bags drying",
             verb: "dry",
             pastTenseVerb: "dried",
-            color: "orange-500"
+            color: "orange-500",
+            colorHex: "#F97316"
         },
         complete: {
             columnName: "bags_completed",
@@ -184,7 +185,8 @@ const bags = {
             friendlyName: "Bags complete",
             verb: "complete",
             pastTenseVerb: "completed",
-            color: "green-500"
+            color: "green-500",
+            colorHex: "#22C55E"
         },
         deliver: {
             columnName: "bags_delivered",
@@ -192,7 +194,8 @@ const bags = {
             friendlyName: "Bags delivered",
             verb: "deliver",
             pastTenseVerb: "delivered",
-            color: "fuchsia-700"
+            color: "fuchsia-700",
+            colorHex: "#a21caf"
         },
     }
 };

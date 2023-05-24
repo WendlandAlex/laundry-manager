@@ -15,159 +15,148 @@
             ">
             {{> bags/moveBagPrompt this}}
         </div>
-    </div>
 
-    <div class="flex flex-row justify-around p-2 items-center px-12 bg-white">
-        <div class="
-                rounded
-                bg-white
-                shadow
-                border
-                border-2
-                px-2
-                py-1
-                border-{{lastEventType.color}}
-            ">
-            <p class="
+
+        <div class="flex flex-row justify-around p-2 items-center px-12 bg-white">
+            <div class="
+                    rounded
+                    bg-white
+                    shadow
+                    border
+                    border-2
+                    px-2
+                    py-1
+                    border-{{lastEventType.color}}
+                ">
+                <p class="
+                                text-base
+                                font-semibold
+                                tracking-tight
+                                bg-white
+                                rounded
+                            ">
+                    Bag ID: {{bagId}}
+                </p>
+                {{> lastEvent lastEventType}}
+            </div>
+
+            <div class="
+                    rounded
+                    bg-white
+                    px-2
+                    py-1
+                    border-{{lastEventType.color}}
+                ">
+                <p class="text-2xl font-medium">
+                    ->
+                </p>
+            </div>
+
+            <div class="
+                    rounded
+                    bg-white
+                    shadow
+                    border
+                    border-2
+                    border-dotted
+                    px-2
+                    py-1
+                    border-{{nextEventType.color}}
+                ">
+                <p class="
                             text-base
                             font-semibold
                             tracking-tight
                             bg-white
                             rounded
                         ">
-                Bag ID: {{bagId}}
-            </p>
-            {{> lastEvent lastEventType}}
+                    Bag ID: {{bagId}}
+                </p>
+                {{>lastEvent nextEventType}}
+            </div>
         </div>
-
-        <div class="
-                rounded
-                bg-white
-                px-2
-                py-1
-                border-{{lastEventType.color}}
-            ">
-            <p class="text-2xl font-medium">
-                ->
-            </p>
-        </div>
-
-        <div class="
-                rounded
-                bg-white
-                shadow
-                border
-                border-2
-                border-dotted
-                px-2
-                py-1
-                border-{{nextEventType.color}}
-            ">
-            <p class="
-                        text-base
-                        font-semibold
-                        tracking-tight
-                        bg-white
-                        rounded
-                    ">
-                Bag ID: {{bagId}}
-            </p>
-            {{>lastEvent nextEventType}}
-        </div>
+        {{> bags/hiddenForm moveFormFields }}
     </div>
 
     <div class="
             bg-white
-            px-8
-            py-4
+            rounded
+            shadow
+            pt-1
+            pb-2
+            border
+            border-gray-200
         ">
-        {{> bags/hiddenForm moveFormFields }}
-    </div>
-</div>
-
-<div class="
-        bg-white
-        rounded
-        shadow
-        pt-1
-        pb-2
-        border
-        border-gray-200
-    ">
-    <div class="
-            py-2
-            px-4
-        ">
-        {{> bags/splitBagPrompt this}}
-    </div>
-
-    <div class="flex flex-row justify-around p-2 items-center px-12">
-
         <div class="
-                rounded
-                bg-white
-                shadow
-                border
-                border-2
-                px-2
-                py-1
-                border-{{lastEventType.color}}
+                py-2
+                px-4
             ">
-            <p class="
+            {{> bags/splitBagPrompt this}}
+        </div>
+
+        <div class="flex flex-row justify-around p-2 items-center px-12">
+
+            <div class="
+                    rounded
+                    bg-white
+                    shadow
+                    border
+                    border-2
+                    px-2
+                    py-1
+                    border-{{lastEventType.color}}
+                ">
+                <p class="
+                                text-base
+                                font-semibold
+                                tracking-tight
+                                bg-white
+                                rounded
+                            ">
+                    Bag ID: {{bagId}}
+                </p>
+                {{> lastEvent lastEventType}}
+            </div>
+
+            <div class="
+                    rounded
+                    bg-white
+                    px-2
+                    py-1
+                    border-{{lastEventType.color}}
+                ">
+                <p class="text-2xl font-medium">
+                    <>
+                </p>
+            </div>
+
+            <div class="
+                    rounded
+                    bg-white
+                    shadow
+                    border
+                    border-2
+                    border-dotted
+                    px-2
+                    py-1
+                    border-{{lastEventType.color}}
+                ">
+                <p class="
                             text-base
                             font-semibold
                             tracking-tight
                             bg-white
                             rounded
                         ">
-                Bag ID: {{bagId}}
-            </p>
-            {{> lastEvent lastEventType}}
+                    Bag ID: {{nextAvailSplitBagId}}
+                </p>
+                {{> lastEvent lastEventType}}
+            </div>
         </div>
 
-        <div class="
-                rounded
-                bg-white
-                px-2
-                py-1
-                border-{{lastEventType.color}}
-            ">
-            <p class="text-2xl font-medium">
-                <>
-            </p>
-        </div>
-
-        <div class="
-                rounded
-                bg-white
-                shadow
-                border
-                border-2
-                border-dotted
-                px-2
-                py-1
-                border-{{lastEventType.color}}
-            ">
-            <p class="
-                        text-base
-                        font-semibold
-                        tracking-tight
-                        bg-white
-                        rounded
-                    ">
-                Bag ID: {{nextAvailSplitBagId}}
-            </p>
-            {{> lastEvent lastEventType}}
-        </div>
-    </div>
-
-    <div class="
-            px-8
-            py-4
-        ">
         {{> bags/hiddenForm splitFormFields }}
+
     </div>
-</div>
 
 {{#if splitFromBagId}}
     <div class="
@@ -246,12 +235,7 @@
             </div>
         </div>
 
-        <div class="
-                px-8
-                py-4
-            ">
-            {{> bags/hiddenForm mergeFormFields }}
-        </div>
+        {{> bags/hiddenForm mergeFormFields }}
     </div>
 {{/if}}
 

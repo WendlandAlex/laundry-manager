@@ -1,3 +1,8 @@
+<div class="
+            px-12
+            py-4
+            bg-white
+        ">
 <form method="POST" action="{{eventFormSubmitUrl}}">
     <button class="
         w-full
@@ -6,10 +11,11 @@
         font-extrabold
         border
         rounded
-        shadow-md
-        text-white
-        bg-{{this.eventType.color}}
-        border-{{this.eventType.color}}
+        drop-shadow
+        drop-shadow-md
+        text-gray-900
+        bg-white
+        border-{{eventType.color}}
     ">
         {{{this.submitButtonText}}}
     </button>
@@ -119,3 +125,4 @@
 
     </div>
 </form>
+</div>
