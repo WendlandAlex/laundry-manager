@@ -26,8 +26,8 @@ const {
     changePersonName,
     getNextEventType,
     getNextAvailBagId,
-    updateBagId,
-    coalesceEvents
+    updateBagById,
+    coalesceEvents,
 } = require("./washDays.utils");
 const {
     camelCaseToSnakeCase,
@@ -328,8 +328,12 @@ const insertEvent = async (req, res, next) => {
                                                      });
 
     // if this is a merge, migrate all events under the child bag_id to the parent bag_id
+    // additionally, decrease bag quantity for 1 to 0 for all events that occurred under the `child branch`
+    // this is because our definition of "complete" vs "incomplete" is accepted <= completed
+    // thus if a bag splits at `accepted` it would leave an orphaned accepted count and permanently mark the person as
+    // "incomplete"
     if (isMergeBagEvent) {
-        await updateBagId(dateCreatedAt, bagId, splitFromBagId);
+        await updateBagById(dateCreatedAt, bagId, splitFromBagId);
     }
 
     // see this person

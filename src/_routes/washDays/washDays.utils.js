@@ -47,18 +47,32 @@ const changePersonName = async (createdAt, oldPersonName, newPersonName) => {
     return sheetsResult;
 };
 
-const updateBagId = async (createdAt, oldBagId, newBagId) => {
+const updateBagById = async (createdAt, oldBagId, newBagId) => {
     let {
         Date: dateCreatedAt,
         ISOString: timestampCreatedAt,
     } = normalizeTime(createdAt);
+
+    // TODO: extract me
+    let _decrementBagColumns = () => {
+        let res = {};
+        Object.values(bags.eventTypes).map(i => {
+            res[i.columnName] = db.raw(`CASE WHEN ${i.columnName} >= 1 THEN 0 ELSE ${i.columnName} END`);
+        });
+
+        return res;
+    };
 
     let data = await db("washdays").update({
                                                bag_id: newBagId, // HACK:
                                                // can't set a `null` in google sheets
                                                // which means we can't send a bulk update which will delete column
                                                // values unless we send an empty string
-                                               split_from_bag_id: "",
+                                               split_from_bag_id: "", // HACK: generate SQL code to set any count to 0,
+                                                                      // so we don't get a false `peopleIncomplete`
+                                                                      // because we left an `accepted` bag behind with
+                                                                      // no matching `completed` bag
+                                               ..._decrementBagColumns(),
                                            })
                                    .where({
                                               bag_id: oldBagId,
@@ -153,7 +167,7 @@ const getBagsSplitFromThisBag = async (createdAt, bagId) => {
 module.exports = {
     getPersonHavingBagId,
     changePersonName,
-    updateBagId,
+    updateBagById,
     coalesceEvents,
     getNextEventType,
     getNextAvailBagId,
