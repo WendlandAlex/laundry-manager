@@ -131,7 +131,7 @@ const modifyPerson = async (req, res, next) => {
 
 const renderEventForm = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let personName = req.query.personName.trim();
+    let personName = req.query.personName ? req.query.personName.trim() : null;
     let bagId = req.query.bagId ? req.query.bagId.trim() : null;
     let lastEventType = req.query.lastEventType ? req.query.lastEventType.trim() : null;
 
