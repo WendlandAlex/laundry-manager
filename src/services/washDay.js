@@ -210,41 +210,56 @@ const getWashDays = async (createdAt = undefined) => {
         createdAt = normalizeTime(createdAt).Date;
     }
 
-    return db.raw(`
-WITH cte AS (
-    SELECT date(washdays.created_at) AS created_at,
-${Object.values(bags.eventTypes).map(i => {
-        return `COUNT(1) FILTER (WHERE ${i.columnName} IS NOT NULL) AS ${i.columnName}`;
-    }).join("," + "\n")}
-      FROM washdays
-      WHERE active = 1
-      AND person_name IS NOT NULL
-      ${createdAt ? `AND date(washdays.created_at) = '${createdAt}'` : ""}  
-      GROUP BY date(created_at)
-    ),
-    cte_personName AS (
-    SELECT date(subq.created_at) AS created_at,
-        COUNT(CASE
-                WHEN subq.bags_completed >= subq.bags_accepted AND subq.bags_accepted > 0 THEN 1 END) AS people_complete,
-        COUNT(CASE
-                WHEN subq.bags_completed < subq.bags_accepted AND subq.bags_accepted > 0 THEN 1 END) AS people_incomplete
-    FROM (
-        SELECT date(created_at) AS created_at,
-            COUNT(CASE WHEN washdays.bags_accepted IS NOT NULL THEN 1 END)  AS bags_accepted,
-            COUNT(CASE WHEN washdays.bags_completed IS NOT NULL THEN 1 END) AS bags_completed
-        FROM washdays
-        WHERE active = 1
-        AND person_name IS NOT NULL
-        ${createdAt ? `AND date(washdays.created_at) = '${createdAt}'` : ""} 
-        GROUP BY created_at, person_name
-        ) AS subq
-      GROUP BY subq.created_at
-    )
+/* cte_people */
+// for each washday, get the count of
+//     people with more accepted than completed bags (incomplete)
+//     people with equal or greater completed bags than accepted bags (complete)
 
- SELECT cte.*, people_complete, people_incomplete
- FROM cte
- LEFT JOIN cte_personName ON cte.created_at = cte_personName.created_at
- ORDER BY cte.created_at DESC;
+/* cte_bags */
+// for each washday, get get the count of
+//     bags that recorded an event in each status
+
+    return db.raw(`
+WITH cte_people AS (
+                   SELECT DATE(subq.created_at)     AS created_at,
+                          COUNT(CASE
+                                    WHEN subq.bags_completed >= subq.bags_accepted AND subq.bags_accepted > 0
+                                        THEN 1 END) AS people_complete,
+                          COUNT(CASE
+                                    WHEN subq.bags_completed < subq.bags_accepted AND subq.bags_accepted > 0
+                                        THEN 1 END) AS people_incomplete
+                   FROM (
+                        SELECT DATE(created_at)                                                AS created_at,
+                               COUNT(CASE WHEN washdays.bags_accepted IS NOT NULL THEN 1 END)  AS bags_accepted,
+                               COUNT(CASE WHEN washdays.bags_completed IS NOT NULL THEN 1 END) AS bags_completed
+                        FROM washdays
+                        WHERE active = 1
+                            AND person_name IS NOT NULL
+                           OR (person_name IS NULL AND notes = 'init washday')
+                           ${createdAt ? `AND date(washdays.created_at) = '${createdAt}'` : ""} 
+                        GROUP BY created_at, person_name
+                        ) AS subq
+                   GROUP BY subq.created_at
+                   ),
+  cte_bags AS (
+     SELECT DATE(washdays.created_at)                                   AS created_at,
+    ${Object.values(bags.eventTypes).map(i => {
+            return `COUNT(1) FILTER (WHERE ${i.columnName} IS NOT NULL) AS ${i.columnName}`;
+        }).join("," + "\n")}
+     FROM washdays
+     WHERE active = 1
+       AND person_name IS NOT NULL
+      ${createdAt ? `AND date(washdays.created_at) = '${createdAt}'` : ""}  
+     GROUP BY DATE(created_at)
+     )
+
+SELECT cte_people.*,
+${Object.values(bags.eventTypes).map(i => {
+        return `cte_bags.${i.columnName} AS ${i.columnName}`;
+    }).join("," + "\n")}
+FROM cte_people
+LEFT JOIN cte_bags ON cte_bags.created_at = cte_people.created_at
+ORDER BY cte_people.created_at DESC;
 `);
 };
 
