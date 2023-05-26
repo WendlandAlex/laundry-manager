@@ -38,7 +38,9 @@
                                required="required"
                                rows="8"
                                name="personName"
+                            {{#unless stringEquals (req.query.personName "New")}}
                                value="{{{req.query.personName}}}"
+                            {{/unless}}
                                placeholder="Person name"
                         >
                     </div>
