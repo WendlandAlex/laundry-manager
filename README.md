@@ -49,6 +49,8 @@ fly scale count 1
 There are no major design decisions that couple the app to `fly.io` infrastructure. The `Dockerfile` can be used to build a container image for any platform.
 
 ## TODO:
+- re-implement `archive a washday` function -- keep a temporary local backup that can `undo` an archive action, but isn't synced to Google Sheets
+- add a `location` dimension to people
 - fix CSS bug that is causes inconsistent form submit button background color in `src/_views/washDays/bagCard.hbs` and `partials/bags/hiddenForm.hbs` -- sometimes a class will be applied with `background_color: transparent;`. There is likely a conflict or hierarchy issue from the generated tailwind styles. See main at `fc2e8f70` before reverting this to white/back.
 - use `crypto` to encrypt `personName` at rest in the DB
 - investigate libraries for replicating sqlite (e.g., [litestream](https://litestream.io/)) or migrate to a real database backend to enable horizontal scaling.

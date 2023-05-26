@@ -234,9 +234,8 @@ WITH cte_people AS (
                                COUNT(CASE WHEN washdays.bags_completed IS NOT NULL THEN 1 END) AS bags_completed
                         FROM washdays
                         WHERE active = 1
-                            AND person_name IS NOT NULL
-                           OR (person_name IS NULL AND notes = 'init washday')
-                           ${createdAt ? `AND date(washdays.created_at) = '${createdAt}'` : ""} 
+                            AND (person_name IS NOT NULL OR (person_name IS NULL AND notes = 'init washday'))
+                           ${createdAt ? `AND date(created_at) = '${createdAt}'` : ""} 
                         GROUP BY created_at, person_name
                         ) AS subq
                    GROUP BY subq.created_at

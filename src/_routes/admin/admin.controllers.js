@@ -124,18 +124,22 @@ const renderWashdayAdminPanel = async (req, res, next) => {
 const modifyAllPeople = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
 
-    let backupSheet = await copySheetToBackup({
-                                                  sourceSpreadsheetId: spreadsheets.main.spreadsheetId,
-                                                  sheetId: spreadsheets.main.sheets.washdays.gid,
-                                                  destinationSpreadsheetId: spreadsheets.backups.spreadsheetId
-                                              });
+    // user has requested to not be responsible for stewarding historical user data. A washday should "end" permanently
+    // TODO: instead of backing up to Google Sheets, backup to a local file (csv, sqlite, etc) that can be restored to
+    // `undo` and archive until the app restarts/server goes away
 
-    if (backupSheet.status != 200) {
-        res.send(502);
-        return;
-    } else {
-        console.log(backupSheet.data);
-    }
+    // let backupSheet = await copySheetToBackup({
+    //                                               sourceSpreadsheetId: spreadsheets.main.spreadsheetId,
+    //                                               sheetId: spreadsheets.main.sheets.washdays.gid,
+    //                                               destinationSpreadsheetId: spreadsheets.backups.spreadsheetId
+    //                                           });
+    //
+    // if (backupSheet.status != 200) {
+    //     res.send(502);
+    //     return;
+    // } else {
+    //     console.log(backupSheet.data);
+    // }
 
     res.redirect(302, `/washdays/${dateCreatedAt}/personOriented`);
 
