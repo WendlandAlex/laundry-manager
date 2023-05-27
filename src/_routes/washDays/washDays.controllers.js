@@ -135,7 +135,7 @@ const renderEventForm = async (req, res, next) => {
     let bagId = req.query.bagId ? req.query.bagId.trim() : null;
     let lastEventType = req.query.lastEventType ? req.query.lastEventType.trim() : null;
 
-    res.render("washDays/bagCard_init", {
+    res.render("washDays/addPersonToWashdayForm", {
         ...injectCommonViewAttributes(req, res),
         pageTitle: "",
         createdAt: dateCreatedAt,
