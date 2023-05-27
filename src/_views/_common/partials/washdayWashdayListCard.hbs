@@ -15,7 +15,7 @@
     <div class="
             flex
             flex-row
-            items-center
+            items-baseline
             shadow
             p-2
             gap-1
@@ -69,14 +69,26 @@
         <div class="
                 content-center
                 rounded
-            ">
-            <p>
+                mx-2
+                px-4
+                border
+                border-gray-200
+                shadow
                 {{#if requestApproved}}
-                    Access Approved
+                text-green-500
+                    ">
+                <p>
+                    Access<br />Approved
                 {{else if requestPending}}
-                    Access Pending
+                text-yellow-500
+                    ">
+                <p>
+                    Access<br />Pending
                 {{else}}
-                    Request Access
+                text-blue-600
+                    ">
+                <p>
+                    Request<br />Access
                 {{/if}}
             </p>
         </div>
