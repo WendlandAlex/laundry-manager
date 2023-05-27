@@ -1,4 +1,6 @@
 const dryerIdFromRowColumn = (row, column) => {
+    if (!row && !column) {return null;}
+
     switch (row) {
         case "top":
         case "Top":

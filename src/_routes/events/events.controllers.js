@@ -60,7 +60,22 @@ const getEventsByDryerId = async (req, res, next) => {
 };
 
 const renderForm = async (req, res) => {
-    let dryer_id = dryerIdFromRowColumn(req.query.row, req.query.column);
+    let row = null
+    if (req.query.row) {
+        row = req.query.row.toLowerCase()
+    } else if (req.query.Row) {
+        row = req.query.Row.toLowerCase()
+    }
+
+    let column = null
+    if (req.query.column) {
+        column = req.query.column
+    } else if (req.query.Column) {
+        column = req.query.Column
+    }
+
+    let dryer_id = dryerIdFromRowColumn(row, column);
+
     let textFields = [
         "error_code", "notes"
     ];
@@ -75,8 +90,8 @@ const renderForm = async (req, res) => {
     res.render("events/eventForm", {
         ...injectCommonViewAttributes(req, res),
         pageTitle: `${laundromat.name} Dryer Event - ${organization.shortName}`,
-        column: req.query.column,
-        row: req.query.row,
+        row: row,
+        column: column,
         dryer_id: dryer_id,
         formSchema: formSchema,
         eventFormSubmitUrl: "/events/insertOneEvent"
