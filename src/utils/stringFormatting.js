@@ -20,6 +20,14 @@ const splitOnDelimiter = (str, delimiter, takeIndex = null) => {
     return (takeIndex != null) ? _split[takeIndex] : _split.join(" ");
 };
 
+const toLowerCase = (str) => {
+    return str.toLowerCase();
+};
+
+const toUpperCase = (str) => {
+    return str.toUpperCase();
+};
+
 const toTitleCase = (str) => {
     str = str.split();
     for (let i = 0; i < str.length; i++) {
@@ -32,5 +40,7 @@ module.exports = {
     camelCaseToSnakeCase,
     snakeCaseToCamelCase,
     splitOnDelimiter,
+    toLowerCase,
+    toUpperCase,
     toTitleCase
 };
