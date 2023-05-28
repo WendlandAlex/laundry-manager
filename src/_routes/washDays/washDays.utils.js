@@ -128,23 +128,21 @@ const getNextEventType = (lastEventType) => {
     }
 };
 
-const getNextAvailBagId = async (createdAt, startingId = null) => {
+const getNextAvailBagId = async (createdAt) => {
     let dateCreatedAt = normalizeTime(createdAt).Date;
 
-    if (!startingId) {
-        startingId = getRandomStepBetween(222, 777, 11);
-    }
+    while (true) {
+        startingId = Math.floor(Math.random() * (9999 - 1001) + 1001)
 
-    let data = await db.min("bag_id as next_bag_id")
-                       .from("washdays")
-                       .whereRaw(`date(created_at) = '${dateCreatedAt}'`)
-                       .andWhere("bag_id", ">", startingId)
-                       .limit(1);
+        let data = await db.select("bag_id")
+                           .from("washdays")
+                           .whereRaw(`date(created_at) = '${dateCreatedAt}'`)
+                           .andWhere("bag_id", "=", startingId)
+                           .limit(1);
 
-    if (!data[0]["next_bag_id"]) {
-        return startingId + 1;
-    } else {
-        return data[0]["next_bag_id"] + 1;
+        if (!data.length) {
+            return startingId;
+        }
     }
 };
 

@@ -18,19 +18,9 @@ const findLastNonZeroKeyOf = (obj) => {
     return Object.keys(obj)[lastIndex];
 };
 
-const getRandomStepBetween = (min, max, stepSize) => {
-    range = [];
-    for (let i = min; i <= max; i += stepSize) {
-        range.push(i);
-    }
-
-    return range[Math.floor(Math.random() * range.length)];
-};
-
 module.exports = {
     arrayToCSV,
     arrayElementsComparison,
     sortObjectByKeys,
-    findLastNonZeroKeyOf,
-    getRandomStepBetween
+    findLastNonZeroKeyOf
 };
