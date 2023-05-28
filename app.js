@@ -1,5 +1,6 @@
-const { db } = require("./src/lib/db");
-const { bags } = require("./config");
+const {
+    bags,
+} = require("./config");
 const {
     camelCaseToSnakeCase,
     snakeCaseToCamelCase,
@@ -12,28 +13,17 @@ const {
     getWashDayFromMoment,
     normalizeTime
 } = require("./src/lib/moment-tz");
+const { getEventTypeByColumnName } = require("./src/utils/viewRendering");
 
 // create the in-memory database and hydrate it with table dumps from Google sheets
 if (!process.env.LOCALDEV) {
-    const { startup } = require("./src/services/startup");
-
-    console.log("DOWN");
-    db.migrate.rollback().then(function () {
-        console.log("UP");
-        return db.migrate.latest();
-
-    });
-    console.log("SEED");
-    startup();
-    console.log("SEED DONE");
+    require("./startup");
 }
 
 const path = require("path");
 const express = require("express");
-
 const hbs = require("express-handlebars");
 const port = process.env.PORT || 8080;
-
 const app = express();
 app.set("view engine", "hbs");
 app.engine("hbs", hbs.engine({
@@ -43,7 +33,16 @@ app.engine("hbs", hbs.engine({
                                  partialsDir: path.join(__dirname, "/src/_views/_common/partials/")
                              }));
 app.set("views", path.join(__dirname, "/src/_views"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+if (!process.env.LOCALDEV) {
+    const loggingMiddleware = require("./src/middleware/morgan-json");
+    app.use(loggingMiddleware());
+}
 
+/* helpers */
 const hbsRuntime = hbs.create({});
 
 hbsRuntime.handlebars.registerHelper("isNotNull", function (arg) {
@@ -156,15 +155,7 @@ hbsRuntime.handlebars.registerHelper("humanTimeFromISOString", function (ISOStri
 hbsRuntime.handlebars.registerHelper("humanTimeFromUnix", function (timestamp) {
     return getFriendlyTimeFromUnixTimestamp(timestamp);
 });
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
-if (!process.env.LOCALDEV) {
-    const loggingMiddleware = require("./src/middleware/morgan-json");
-    app.use(loggingMiddleware());
-}
-app.use(cookieParser());
+/* helpers */
 
 const eventsRoutes = require("./src/_routes/events");
 const dryersRoutes = require("./src/_routes/dryers");
@@ -172,7 +163,6 @@ const washDayRoutes = require("./src/_routes/washDays");
 const dashboardRoutes = require("./src/_routes/dashboard");
 const adminRoutes = require("./src/_routes/admin");
 const authRoutes = require("./src/_routes/auth");
-const { getEventTypeByColumnName } = require("./src/utils/viewRendering");
 
 app.use("/events", eventsRoutes);
 app.use("/dryers", dryersRoutes);

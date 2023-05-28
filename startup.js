@@ -1,19 +1,24 @@
-require('dotenv').config()
+require("dotenv").config();
 
-const {dbCheck, hydrateSqliteFromSpreadsheet} = require('./src/services/startup')
-const {db} = require("./src/lib/db");
-const {sheets} = require('./config/index').spreadsheets.main
-console.log(Object.keys(sheets))
+const { hydrateSqliteFromSpreadsheet } = require("./src/services/startup");
+const { db } = require("./src/lib/db");
+const { spreadsheets } = require("./config/index");
 
-if (require.main === module) {
-  // pull down the google sheets backend and insert it into a local sqlite database
-  console.log('SEED')
-    hydrateSqliteFromSpreadsheet(Object.keys(sheets)).then(() => {
-    }).then(() => {
-      db.select('*').from('events').then((query) => {
-      })
-      console.log('SEED DONE')
-    }).then(() => {
-      process.exit(0)
-    })
+async function main() {
+    console.log("DOWN");
+    await db.migrate.rollback();
+
+    console.log("UP");
+    await db.migrate.latest();
+
+    console.log("SEED");
+    let results = await hydrateSqliteFromSpreadsheet(Object.keys(spreadsheets.main.sheets));
+    results.forEach(i => console.log("[seed]", i));
+
+    console.log("SEED DONE");
+    if (process.env.LOCALDEV) {
+        process.exit(0);
+    }
 }
+
+main().then();

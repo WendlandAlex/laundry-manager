@@ -6,6 +6,18 @@ const arrayToCSV = (arr, delimiter = ",", headerRowIndex = 0) => {
     return result;
 };
 
+const partitionArray = (arr, chunkSize) => {
+    let res = [];
+
+    for (let i = 0; i < arr.length; i += chunkSize) {
+        res.push(
+            arr.slice(i, i + chunkSize)
+        );
+    }
+
+    return res;
+};
+
 const arrayElementsComparison = (arr1, arr2) => {
     return (arr1.length === arr2.length && arr1.every((element, atIndex) => element === arr2[atIndex]));
 };
@@ -20,6 +32,7 @@ const findLastNonZeroKeyOf = (obj) => {
 
 module.exports = {
     arrayToCSV,
+    partitionArray,
     arrayElementsComparison,
     sortObjectByKeys,
     findLastNonZeroKeyOf

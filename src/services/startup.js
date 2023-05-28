@@ -1,7 +1,10 @@
 const sheet = require("../../config").spreadsheets.main;
 const { db } = require("../lib/db");
 const { makeGoogleAPICLient } = require("../lib/google-cloud");
-const { arrayElementsComparison } = require("../utils/dataManipulation");
+const {
+    arrayElementsComparison,
+    partitionArray
+} = require("../utils/dataManipulation");
 
 const dbCheck = async () => {
     let queryResult = await db("dryers").count("id");
@@ -10,17 +13,15 @@ const dbCheck = async () => {
         ["count(`id`)"];
 
     // is the number of dryers even?
-    return (
-        numDryers > 0 &&
-        numDryers % 2 === 0
-    );
+    return (numDryers > 0 && numDryers % 2 === 0);
 };
 
 const hydrateSqliteFromSpreadsheet = async (sheets = []) => {
-    results = [];
+    // sqlite has a max of 500 rows for bulk import
+    let rowCounter = 0
+    let results = []
 
     let sheetsClient = await makeGoogleAPICLient("sheets");
-
     for (const sheetName of sheets) {
         console.log(sheet.sheets[sheetName].ranges.default);
         let res = await sheetsClient.spreadsheets.values.get({
@@ -37,7 +38,7 @@ const hydrateSqliteFromSpreadsheet = async (sheets = []) => {
 
         let arraysIdentical = arrayElementsComparison(header, Object.values(sheet.sheets[sheetName].header));
 
-        if (arraysIdentical != true) {
+        if (arraysIdentical !== true) {
             throw new Error(`Schema mismatch on ${sheetName}: remote was ${JSON.stringify(header)}, local was ${JSON.stringify(
                 Object.values(sheet.sheets[sheetName].header))}`);
         }
@@ -54,24 +55,21 @@ const hydrateSqliteFromSpreadsheet = async (sheets = []) => {
         });
 
         if (toInsert.length) {
-            let dbInsert = await db(sheetName).insert(toInsert).returning("id");
-            results.push(
-                `inserted ${dbInsert.length} rows into ${sheetName}`
-            );
+            let chunks = partitionArray(toInsert, 500)
+
+            for (let chunk of chunks) {
+                let dbInsert = await db(sheetName).insert(chunk).returning("id");
+                rowCounter += dbInsert.length
+            }
+
+            results.push(`inserted ${rowCounter} rows into ${sheetName}`)
         }
-
-        // return results
     }
-};
 
-const startup = () => {
-    let sheets = Object.keys(sheet.sheets);
-    hydrateSqliteFromSpreadsheet(sheets).then(() => {
-    });
+    return results;
 };
 
 module.exports = {
     dbCheck,
     hydrateSqliteFromSpreadsheet,
-    startup
 };
