@@ -1,14 +1,14 @@
-const sheet = require("../../config").spreadsheets.main;
-const { db } = require("../lib/db");
+const sheet                   = require("../../config").spreadsheets.main;
+const { db }                  = require("../lib/db");
 const { makeGoogleAPICLient } = require("../lib/google-cloud");
 const {
-    arrayElementsComparison,
-    partitionArray
-} = require("../utils/dataManipulation");
+          arrayElementsComparison,
+          partitionArray
+      }                       = require("../utils/dataManipulation");
 
 const dbCheck = async () => {
     let queryResult = await db("dryers").count("id");
-    let numDryers = queryResult
+    let numDryers   = queryResult
         .at(0)
         ["count(`id`)"];
 
@@ -18,8 +18,8 @@ const dbCheck = async () => {
 
 const hydrateSqliteFromSpreadsheet = async (sheets = []) => {
     // sqlite has a max of 500 rows for bulk import
-    let rowCounter = 0
-    let results = []
+    let rowCounter = 0;
+    let results    = [];
 
     let sheetsClient = await makeGoogleAPICLient("sheets");
     for (const sheetName of sheets) {
@@ -55,14 +55,14 @@ const hydrateSqliteFromSpreadsheet = async (sheets = []) => {
         });
 
         if (toInsert.length) {
-            let chunks = partitionArray(toInsert, 500)
+            let chunks = partitionArray(toInsert, 500);
 
             for (let chunk of chunks) {
                 let dbInsert = await db(sheetName).insert(chunk).returning("id");
-                rowCounter += dbInsert.length
+                rowCounter += dbInsert.length;
             }
 
-            results.push(`inserted ${rowCounter} rows into ${sheetName}`)
+            results.push(`inserted ${rowCounter} rows into ${sheetName}`);
         }
     }
 

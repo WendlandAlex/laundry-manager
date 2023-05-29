@@ -1,9 +1,9 @@
-const knex = require("knex");
+const knex        = require("knex");
 const knex_config = require("../../knexfile");
 const {
-    getCurrentWashDay,
-    getTimestampFromMoment
-} = require("./moment-tz");
+          getCurrentWashDay,
+          getTimestampFromMoment
+      }           = require("./moment-tz");
 
 const db = knex(knex_config.development);
 

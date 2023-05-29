@@ -25,10 +25,10 @@ const dryerIdFromRowColumn = (row, column) => {
 
 const rowColumnFromDryerId = (dryerId) => {
     if (dryerId % 2 === 0) {
-        _row = 1;
+        _row    = 1;
         _column = (dryerId / 2);
     } else {
-        _row = 0;
+        _row    = 0;
         _column = Math.ceil(dryerId / 2);
     }
 

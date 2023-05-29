@@ -1,5 +1,5 @@
 const { moment } = require("../../lib/moment-tz");
-const { db } = require("../../lib/db");
+const { db }     = require("../../lib/db");
 
 const fetchUsersPendingAuthorization = async (createdAt) => {
     let data = await db.select("*")

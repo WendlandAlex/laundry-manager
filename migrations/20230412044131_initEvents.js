@@ -4,23 +4,23 @@
  */
 exports.up = function (knex, Promise) {
     return knex.schema
-               .createTable('events', (table) => {
-                   table.increments('id');
-                   table.integer('active')
+               .createTable("events", (table) => {
+                   table.increments("id");
+                   table.integer("active")
                         .notNullable()
                         .defaultTo(1);
-                   table.integer('dryer_id')
+                   table.integer("dryer_id")
                         .notNullable();
-                   table.integer('restarts')
+                   table.integer("restarts")
                         .notNullable()
                         .defaultTo(0);
-                   table.text('error_code');
-                   table.text('created_at')
-                        .defaultTo('CURRENT_TIMESTAMP');
-                   table.integer('working')
+                   table.text("error_code");
+                   table.text("created_at")
+                        .defaultTo("CURRENT_TIMESTAMP");
+                   table.integer("working")
                         .notNullable()
                         .defaultTo(1);
-                   table.text('notes');
+                   table.text("notes");
                });
 };
 

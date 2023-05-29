@@ -4,33 +4,33 @@
  */
 exports.up = function (knex) {
     return knex.schema
-               .createTable('washdays', (table) => {
-                   table.increments('id');
-                   table.integer('active')
+               .createTable("washdays", (table) => {
+                   table.increments("id");
+                   table.integer("active")
                         .notNullable()
                         .defaultTo(1);
-                   table.text('created_at')
-                        .defaultTo('CURRENT_TIMESTAMP');
-                   table.text('person_name');
-                   table.integer('bag_id')
+                   table.text("created_at")
+                        .defaultTo("CURRENT_TIMESTAMP");
+                   table.text("person_name");
+                   table.integer("bag_id")
                         .defaultTo(null);
-                   table.integer('split_from_bag_id')
+                   table.integer("split_from_bag_id")
                         .defaultTo(null);
-                   table.integer('bags_accepted')
+                   table.integer("bags_accepted")
                         .defaultTo(null);
-                   table.integer('bags_washed')
+                   table.integer("bags_washed")
                         .defaultTo(null);
-                   table.integer('washer_id')
+                   table.integer("washer_id")
                         .defaultTo(null);
-                   table.integer('bags_dried')
+                   table.integer("bags_dried")
                         .defaultTo(null);
-                   table.integer('dryer_id')
+                   table.integer("dryer_id")
                         .defaultTo(null);
-                   table.integer('bags_completed')
+                   table.integer("bags_completed")
                         .defaultTo(null);
-                   table.integer('bags_delivered')
+                   table.integer("bags_delivered")
                         .defaultTo(null);
-                   table.text('notes')
+                   table.text("notes")
                         .defaultTo(null);
                });
 };

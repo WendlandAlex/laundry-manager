@@ -1,8 +1,8 @@
 require("dotenv").config();
 
 const { hydrateSqliteFromSpreadsheet } = require("./src/services/startup");
-const { db } = require("./src/lib/db");
-const { spreadsheets } = require("./config/index");
+const { db }                           = require("./src/lib/db");
+const { spreadsheets }                 = require("./config/index");
 
 async function main() {
     console.log("DOWN");

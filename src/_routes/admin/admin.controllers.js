@@ -1,27 +1,27 @@
 const {
-    organization,
-    spreadsheets
-} = require("../../../config");
+          organization,
+          spreadsheets
+      } = require("../../../config");
 
 const {
-    bakeAdminCookie,
-    validateAdminPassword
-} = require("../../lib/auth");
-const { getWashDays } = require("../../services/washDay");
-const { copySheetToBackup } = require("../../lib/google-sheets");
-const { db } = require("../../lib/db");
-const { changePersonName } = require("../washDays/washDays.utils");
-const { makeFirstName } = require("../../lib/faker-fakes");
+          bakeAdminCookie,
+          validateAdminPassword
+      }                              = require("../../lib/auth");
+const { getWashDays }                = require("../../services/washDay");
+const { copySheetToBackup }          = require("../../lib/google-sheets");
+const { db }                         = require("../../lib/db");
+const { changePersonName }           = require("../washDays/washDays.utils");
+const { makeFirstName }              = require("../../lib/faker-fakes");
 const {
-    getUserRequestsNotAuthorized,
-    rejectExpiredUserRequests,
-    authorizeUserRequestsById
-} = require("../auth/auth.utils");
+          getUserRequestsNotAuthorized,
+          rejectExpiredUserRequests,
+          authorizeUserRequestsById
+      }                              = require("../auth/auth.utils");
 const {
-    getCurrentTimestamp,
-    normalizeTime,
-    getCurrentWashDay
-} = require("../../lib/moment-tz");
+          getCurrentTimestamp,
+          normalizeTime,
+          getCurrentWashDay
+      }                              = require("../../lib/moment-tz");
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
 const renderAdminLoginForm = async (req, res, next) => {
@@ -33,14 +33,14 @@ const renderAdminLoginForm = async (req, res, next) => {
 };
 
 const submitAdminLoginForm = async (req, res, next) => {
-    let adminIp = (req._remoteAddress);
-    let adminUa = (req.headers[`user-agent`]);
+    let adminIp     = (req._remoteAddress);
+    let adminUa     = (req.headers[`user-agent`]);
     let redirectUrl = req.body.redirectUrl || `/`;
 
     let {
-        adminUsername,
-        adminPassword
-    } = req.body;
+            adminUsername,
+            adminPassword
+        } = req.body;
 
     if (!validateAdminPassword(adminPassword)) {
         res.redirect(302, "/admin/login");
@@ -48,10 +48,10 @@ const submitAdminLoginForm = async (req, res, next) => {
     }
 
     let {
-        cookieName,
-        cookieValue,
-        opts
-    } = bakeAdminCookie(adminUsername, adminIp, adminUa);
+            cookieName,
+            cookieValue,
+            opts
+        } = bakeAdminCookie(adminUsername, adminIp, adminUa);
 
     return res.cookie(cookieName, cookieValue, opts)
               .redirect(302, redirectUrl);
@@ -82,8 +82,8 @@ const renderApproveWashdayUsersForm = async (req, res, next) => {
 };
 
 const submitApproveWashdayUsersForm = async (req, res, next) => {
-    let approvedRequests = req.body;
-    let adminUsername = res.locals.adminUsername;
+    let approvedRequests   = req.body;
+    let adminUsername      = res.locals.adminUsername;
     let timestampCreatedAt = normalizeTime(getCurrentTimestamp()).ISOString;
 
     let data = await authorizeUserRequestsById(Object.keys(approvedRequests), timestampCreatedAt, adminUsername);
@@ -93,10 +93,10 @@ const submitApproveWashdayUsersForm = async (req, res, next) => {
 
 const renderWashdayAdminPanel = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let sortColumn = req.query.sortColumn || "person_name";
+    let sortColumn    = req.query.sortColumn || "person_name";
 
     let data = await getWashDays(dateCreatedAt);
-    data = {
+    data     = {
         people: {
             complete: data[0].people_complete,
             incomplete: data[0].people_incomplete

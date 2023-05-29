@@ -1,10 +1,10 @@
-const express = require("express");
-const washDaysRoutes = express.Router();
+const express          = require("express");
+const washDaysRoutes   = express.Router();
 const washDaysHandlers = require("./washDays.controllers");
 const {
-    authenticateAnyToken,
-    readUserTokensNonBlocking
-} = require("../../middleware/auth");
+          authenticateAnyToken,
+          readUserTokensNonBlocking
+      }                = require("../../middleware/auth");
 
 // init washday
 // any anonymous user can do this, but they can't log in to the washday until they login

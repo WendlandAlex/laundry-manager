@@ -1,8 +1,8 @@
-const { buildDashboard } = require("../../services/dashboard");
-const { getAllDryers } = require("../../services/dryers");
+const { buildDashboard }             = require("../../services/dashboard");
+const { getAllDryers }               = require("../../services/dryers");
 const {
-    organization
-} = require("../../../config");
+          organization
+      }                              = require("../../../config");
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
 const getDashboard = async (req, res, next) => {

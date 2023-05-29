@@ -1,7 +1,7 @@
-const express = require("express");
+const express                       = require("express");
 const { readUserTokensNonBlocking } = require("../../middleware/auth");
 
-const authRoutes = express.Router();
+const authRoutes      = express.Router();
 const authControllers = require("./auth.controllers");
 
 authRoutes.route("/login/:createdAt")

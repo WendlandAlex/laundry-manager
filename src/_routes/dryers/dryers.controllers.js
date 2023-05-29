@@ -1,11 +1,11 @@
 const {
-    formatDryerEntry,
-    getAllDryers
-} = require("../../services/dryers");
+          formatDryerEntry,
+          getAllDryers
+      }                              = require("../../services/dryers");
 const {
-    laundromat,
-} = require("../../../config");
-const { getEvent } = require("../../lib/db");
+          laundromat,
+      }                              = require("../../../config");
+const { getEvent }                   = require("../../lib/db");
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
 // get array of all dryers

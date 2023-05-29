@@ -1,14 +1,14 @@
 const jwt = require("jsonwebtoken");
 const {
-    jwtAdminSecret,
-    jwtAdminSecretExpiresIn,
-    jwtUserSecret,
-    jwtUserSecretExpiresIn,
-    adminCookieName,
-    userCookieNamePrefix,
-    jwtAdminCookieMaxAge,
-    jwtUserCookieMaxAge
-} = require("../../config");
+          jwtAdminSecret,
+          jwtAdminSecretExpiresIn,
+          jwtUserSecret,
+          jwtUserSecretExpiresIn,
+          adminCookieName,
+          userCookieNamePrefix,
+          jwtAdminCookieMaxAge,
+          jwtUserCookieMaxAge
+      }   = require("../../config");
 
 
 const defaultCookieOpts = {

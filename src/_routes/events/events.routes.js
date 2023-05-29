@@ -1,8 +1,8 @@
-const express = require("express");
+const express      = require("express");
 const eventsRoutes = express.Router();
 
 
-const eventsHandlers = require("./events.controllers");
+const eventsHandlers                = require("./events.controllers");
 const { readUserTokensNonBlocking } = require("../../middleware/auth");
 
 eventsRoutes.post("/insertOneEvent", readUserTokensNonBlocking, (req, res, next) => {

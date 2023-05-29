@@ -1,7 +1,7 @@
-const path = require("path");
-const express = require("express");
+const path          = require("path");
+const express       = require("express");
 const cookie_parser = require("cookie-parser");
-const hbs = require("express-handlebars");
+const hbs           = require("express-handlebars");
 
 /* data */
 // create the in-memory database and hydrate it with table dumps from Google sheets

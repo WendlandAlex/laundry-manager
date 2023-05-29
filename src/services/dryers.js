@@ -1,9 +1,9 @@
 const { laundromat } = require("../../config");
-const { db } = require("../lib/db");
+const { db }         = require("../lib/db");
 const {
-    dryerIdFromRowColumn,
-    rowColumnFromDryerId
-} = require("../utils/dryers");
+          dryerIdFromRowColumn,
+          rowColumnFromDryerId
+      }              = require("../utils/dryers");
 
 const getAllDryers = async () => {
     let data = await db.select("*")
@@ -32,26 +32,26 @@ const getAllDryers = async () => {
 };
 
 const formatDryerEntry = (arrData) => {
-    let res = {};
+    let res      = {};
     // invariant
     res.dryer_id = arrData[0].dryer_id;
     let {
-        row,
-        column
-    } = rowColumnFromDryerId(arrData[0].dryer_id);
-    res.column = column;
-    res.rowInt = row;
-    res.top = row === 1;
-    res.row = res.top ? "Top" : "Bottom";
+            row,
+            column
+        }        = rowColumnFromDryerId(arrData[0].dryer_id);
+    res.column   = column;
+    res.rowInt   = row;
+    res.top      = row === 1;
+    res.row      = res.top ? "Top" : "Bottom";
 
     // top one of
-    res.working = arrData[0].working === 1;
+    res.working      = arrData[0].working === 1;
     res.last_updated = arrData[0].created_at;
 
     // aggregated
-    res.error_codes = [];
+    res.error_codes         = [];
     res.error_codes_summary = {};
-    res.notes = [];
+    res.notes               = [];
     arrData.map(i => {
         if (i.error_code && i.error_code !== "null") {
             res.error_codes.push({
@@ -64,9 +64,9 @@ const formatDryerEntry = (arrData) => {
             res.error_codes_summary[i.error_code] += 1;
         }
         if (i.notes) {
-            notesPayload = {};
+            notesPayload            = {};
             notesPayload.created_at = i.created_at;
-            notesPayload.note = i.notes;
+            notesPayload.note       = i.notes;
             if (i.error_code && i.error_code !== "null") {
                 notesPayload.error_code = i.error_code;
             }

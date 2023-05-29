@@ -1,5 +1,5 @@
-const sheet = require("../../config").spreadsheets.main;
-const backupsSheet = require("../../config").spreadsheets.backups;
+const sheet                   = require("../../config").spreadsheets.main;
+const backupsSheet            = require("../../config").spreadsheets.backups;
 const { makeGoogleAPICLient } = require("./google-cloud");
 
 // `unflatten` the array of values into an array of 1-element arrays

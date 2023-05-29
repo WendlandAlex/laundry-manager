@@ -1,14 +1,14 @@
-const jwt = require("jsonwebtoken");
+const jwt                   = require("jsonwebtoken");
 const {
-    jwtAdminSecret,
-    adminCookieName,
-    userCookieNamePrefix,
-    jwtUserCookieMaxAge
-} = require("../../config");
+          jwtAdminSecret,
+          adminCookieName,
+          userCookieNamePrefix,
+          jwtUserCookieMaxAge
+      }                     = require("../../config");
 const { getCurrentWashDay } = require("../lib/moment-tz");
 const {
-    getUserRequests,
-} = require("../_routes/auth/auth.utils");
+          getUserRequests,
+      }                     = require("../_routes/auth/auth.utils");
 const { defaultCookieOpts } = require("../lib/auth");
 
 
@@ -65,9 +65,9 @@ const decodeAndVerifyToken = (token, secret) => {
 
 const authenticateAdminToken = (req, res, next) => {
     let {
-        err,
-        data
-    } = decodeAndVerifyToken(req.cookies[adminCookieName], jwtAdminSecret);
+            err,
+            data
+        } = decodeAndVerifyToken(req.cookies[adminCookieName], jwtAdminSecret);
 
     if (err) {
         return res.redirect(302, "/admin/login");
@@ -82,9 +82,9 @@ const authenticateAdminToken = (req, res, next) => {
 };
 
 const authenticateAnyToken = async (req, res, next) => {
-    let ip = (req._remoteAddress);
-    let ua = (req.headers[`user-agent`]);
-    let params = req.path.match(createdAtRegex);
+    let ip        = (req._remoteAddress);
+    let ua        = (req.headers[`user-agent`]);
+    let params    = req.path.match(createdAtRegex);
     let createdAt = params.groups.createdAt || getCurrentWashDay();
 
     // if you have an admin token, you are authorized to take all user actions,
@@ -135,12 +135,12 @@ const authenticateAnyToken = async (req, res, next) => {
 // e.g, to surface to the user "your access request was approved"
 const readUserTokensNonBlocking = async (req, res, next) => {
     res.locals.userAuthorizedTokens = {};
-    res.locals.userPendingTokens = {};
+    res.locals.userPendingTokens    = {};
     if (req.cookies[adminCookieName]) {
         let {
-            err,
-            data
-        } = decodeAndVerifyToken(req.cookies[adminCookieName], jwtAdminSecret);
+                err,
+                data
+            } = decodeAndVerifyToken(req.cookies[adminCookieName], jwtAdminSecret);
 
         if (data) {
             res.locals["adminUsername"] = data.adminUsername;

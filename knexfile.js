@@ -1,5 +1,5 @@
-require('dotenv').config()
-const {db} = require('./config')
+require("dotenv").config();
+const { db } = require("./config");
 
 // Update with your config settings.
 
@@ -7,9 +7,9 @@ const {db} = require('./config')
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 module.exports = {
-  development: {
-    client: 'sqlite3',
-    connection: db.connection,
-    useNullAsDefault: true
-  }
+    development: {
+        client: "sqlite3",
+        connection: db.connection,
+        useNullAsDefault: true
+    }
 };

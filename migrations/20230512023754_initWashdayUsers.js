@@ -4,27 +4,27 @@
  */
 exports.up = function (knex) {
     return knex.schema
-               .createTable('washdayUsers', (table) => {
-                   table.increments('id');
-                   table.text('userUsername');
-                   table.text('created_at');
-                   table.text('ip')
+               .createTable("washdayUsers", (table) => {
+                   table.increments("id");
+                   table.text("userUsername");
+                   table.text("created_at");
+                   table.text("ip")
                         .defaultTo(null);
-                   table.text('user_agent')
+                   table.text("user_agent")
                         .defaultTo(null);
-                   table.text('requested_at')
-                        .defaultTo('CURRENT_TIMESTAMP');
-                   table.text('expires_at')
+                   table.text("requested_at")
+                        .defaultTo("CURRENT_TIMESTAMP");
+                   table.text("expires_at")
                         .defaultTo(null);
-                   table.text('cookie_value')
+                   table.text("cookie_value")
                         .defaultTo(null);
-                   table.text('authorized_at')
+                   table.text("authorized_at")
                         .defaultTo(null);
-                   table.text('authorized_by')
+                   table.text("authorized_by")
                         .defaultTo(null);
-                   table.text('rejected_at')
+                   table.text("rejected_at")
                         .defaultTo(null);
-                   table.text('rejected_by')
+                   table.text("rejected_by")
                         .defaultTo(null);
                });
 };

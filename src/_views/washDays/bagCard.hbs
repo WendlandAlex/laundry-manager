@@ -158,8 +158,8 @@
 
     </div>
 
-{{#if splitFromBagId}}
-    <div class="
+    {{#if splitFromBagId}}
+        <div class="
             bg-white
             rounded
             shadow
@@ -168,16 +168,16 @@
             border
             border-gray-200
         ">
-        <div class="
+            <div class="
             py-2
             px-4
         ">
-            {{> bags/mergeBagPrompt this}}
-        </div>
+                {{> bags/mergeBagPrompt this}}
+            </div>
 
-        <div class="flex flex-row justify-around p-2 items-center px-12">
+            <div class="flex flex-row justify-around p-2 items-center px-12">
 
-            <div class="
+                <div class="
                 rounded
                 bg-white
                 shadow
@@ -188,31 +188,31 @@
                 py-1
                 border-{{splitFromBagLastEventType.color}}
             ">
-                <p class="
+                    <p class="
                             text-base
                             font-semibold
                             tracking-tight
                             bg-white
                             rounded
                         ">
-                    Bag ID: {{splitFromBagId}}
-                </p>
-                {{> lastEvent splitFromBagLastEventType}}
-            </div>
+                        Bag ID: {{splitFromBagId}}
+                    </p>
+                    {{> lastEvent splitFromBagLastEventType}}
+                </div>
 
-            <div class="
+                <div class="
                 rounded
                 bg-white
                 px-2
                 py-1
                 border-{{lastEventType.color}}
             ">
-                <p class="text-2xl font-medium">
-                    <-
-                </p>
-            </div>
+                    <p class="text-2xl font-medium">
+                        <-
+                    </p>
+                </div>
 
-            <div class="
+                <div class="
                 rounded
                 bg-white
                 shadow
@@ -222,25 +222,25 @@
                 py-1
                 border-{{lastEventType.color}}
             ">
-                <p class="
+                    <p class="
                         text-base
                         font-semibold
                         tracking-tight
                         bg-white
                         rounded
                     ">
-                    Bag ID: {{bagId}}
-                </p>
-                {{> lastEvent lastEventType}}
+                        Bag ID: {{bagId}}
+                    </p>
+                    {{> lastEvent lastEventType}}
+                </div>
             </div>
+
+            {{> bags/hiddenForm mergeFormFields }}
         </div>
-
-        {{> bags/hiddenForm mergeFormFields }}
-    </div>
-{{/if}}
+    {{/if}}
 
 
-<div class="
+    <div class="
             bg-white
             flex
             flex-row
@@ -253,8 +253,8 @@
             px-2
             py-6
         ">
-    <a href="/washdays/{{createdAt}}/person/{{personName}}"
-       class="
+        <a href="/washdays/{{createdAt}}/person/{{personName}}"
+           class="
             px-2
             font-extrabold
             border
@@ -267,11 +267,11 @@
             hover:bg-white
             hover:text-green-600
             ">
-        Return to Person
-    </a>
+            Return to Person
+        </a>
 
-    <a href="/washdays/{{createdAt}}/personOriented"
-       class="
+        <a href="/washdays/{{createdAt}}/personOriented"
+           class="
             px-2
             font-extrabold
             border
@@ -284,11 +284,11 @@
             hover:bg-white
             hover:text-blue-600
             ">
-        Return to People
-    </a>
+            Return to People
+        </a>
 
-    <a href="/washdays/{{createdAt}}/bagOriented"
-       class="
+        <a href="/washdays/{{createdAt}}/bagOriented"
+           class="
             px-2
             font-extrabold
             border
@@ -301,8 +301,8 @@
             hover:bg-white
             hover:text-red-600
             ">
-        Return to Bags
-    </a>
-</div>
+            Return to Bags
+        </a>
+    </div>
 
 </div>

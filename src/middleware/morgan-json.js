@@ -2,7 +2,7 @@
 "use strict";
 
 var morgan = require("morgan");
-var os = require("os");
+var os     = require("os");
 
 morgan.token("conversation-id", function getConversationId(req) {
     return req.conversationId;

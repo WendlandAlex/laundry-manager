@@ -1,15 +1,15 @@
 require("dotenv").config();
 const path = require("path");
 
-const jwtAdminSecret = process.env.JWT_ADMIN_SECRET;
+const jwtAdminSecret          = process.env.JWT_ADMIN_SECRET;
 const jwtAdminSecretExpiresIn = process.env.JWT_ADMIN_EXPIRES_IN || "6h";
-const jwtAdminCookieMaxAge = process.env.JWT_ADMIN_COOKIE_MAX_AGE || 21600000;
-const adminCookieName = process.env.JWT_ADMIN_COOKIE_NAME || "laundromat_admin";
+const jwtAdminCookieMaxAge    = process.env.JWT_ADMIN_COOKIE_MAX_AGE || 21600000;
+const adminCookieName         = process.env.JWT_ADMIN_COOKIE_NAME || "laundromat_admin";
 
-const jwtUserSecret = process.env.JWT_USER_SECRET;
+const jwtUserSecret          = process.env.JWT_USER_SECRET;
 const jwtUserSecretExpiresIn = process.env.JWT_USER_EXPIRES_IN || "4h";
-const jwtUserCookieMaxAge = process.env.JWT_USER_COOKIE_MAX_AGE || 14400000;
-const userCookieNamePrefix = process.env.JWT_USER_COOKIE_PREFIX || "laundromat_user";
+const jwtUserCookieMaxAge    = process.env.JWT_USER_COOKIE_MAX_AGE || 14400000;
+const userCookieNamePrefix   = process.env.JWT_USER_COOKIE_PREFIX || "laundromat_user";
 
 // NOTE: if using service account auth, you must `share` the spreadsheet, literally by
 // inviting the service account user by email to be `Editor` on the sheet

@@ -1,10 +1,10 @@
 const { db } = require("../../lib/db");
 const {
-    getCurrentWashDay,
-    getCurrentTimestamp,
-    getCurrentUnixTimestamp,
-    normalizeTime
-} = require("../../lib/moment-tz");
+          getCurrentWashDay,
+          getCurrentTimestamp,
+          getCurrentUnixTimestamp,
+          normalizeTime
+      }      = require("../../lib/moment-tz");
 
 const insertUserRequest = async (userUsername, created_at, ip, user_agent, columnOpts = {}) => {
     let dateCreatedAt = normalizeTime(created_at || getCurrentWashDay()).Date;

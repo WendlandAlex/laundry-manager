@@ -1,46 +1,45 @@
 const {
-    insertEventDb,
-    getEvent
-} = require("../../lib/db");
+          insertEventDb,
+          getEvent
+      } = require("../../lib/db");
 const {
-    getCurrentWashDay,
-    normalizeTime,
-    getWashDayFromMoment
-} = require("../../lib/moment-tz");
+          getCurrentWashDay,
+          normalizeTime,
+          getWashDayFromMoment
+      } = require("../../lib/moment-tz");
 const {
-    spreadsheets,
-    bags,
-    organization,
-} = require("../../../config");
+          spreadsheets,
+          bags,
+          organization,
+      } = require("../../../config");
 const {
-    appendEventGoogleSheets,
-} = require("../../lib/google-sheets");
-const {} = require("../../utils/dataManipulation");
+          appendEventGoogleSheets,
+      } = require("../../lib/google-sheets");
 const {
-    aggregateWashDayEventsByPerson,
-    getAggregatedWashDayData,
-    getWashDays,
-} = require("../../services/washDay");
+          aggregateWashDayEventsByPerson,
+          getAggregatedWashDayData,
+          getWashDays,
+      } = require("../../services/washDay");
 const {
-    getPersonHavingBagId,
-    changePersonName,
-    getNextEventType,
-    getNextAvailBagId,
-    updateBagById,
-    coalesceEvents,
-} = require("./washDays.utils");
+          getPersonHavingBagId,
+          changePersonName,
+          getNextEventType,
+          getNextAvailBagId,
+          updateBagById,
+          coalesceEvents,
+      } = require("./washDays.utils");
 const {
-    camelCaseToSnakeCase,
-} = require("../../utils/stringFormatting");
+          camelCaseToSnakeCase,
+      } = require("../../utils/stringFormatting");
 const {
-    injectCommonViewAttributes,
-    getEventTypeByColumnName
-} = require("../../utils/viewRendering");
+          injectCommonViewAttributes,
+          getEventTypeByColumnName
+      } = require("../../utils/viewRendering");
 
 const renderWashdaysView = async (req, res, next) => {
-    let adminUsername = res.locals.adminUsername;
+    let adminUsername        = res.locals.adminUsername;
     let userAuthorizedTokens = res.locals.userAuthorizedTokens;
-    let userPendingTokens = res.locals.userPendingTokens;
+    let userPendingTokens    = res.locals.userPendingTokens;
 
     // get the dates that have any events
     let data = await getWashDays();
@@ -99,9 +98,9 @@ const renderWashdaysView = async (req, res, next) => {
 
 const createNewWashDay = async (req, res, next) => {
     let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(req.query.createdAt || getCurrentWashDay());
+            Date: dateCreatedAt,
+            ISOString: timestampCreatedAt,
+        } = normalizeTime(req.query.createdAt || getCurrentWashDay());
 
     // NOTE to maintain integrity of incrementing PK `id` we must sync this to google sheets
     // just like a `real` row
@@ -120,7 +119,7 @@ const createNewWashDay = async (req, res, next) => {
 };
 
 const modifyPerson = async (req, res, next) => {
-    let createdAt = req.params.createdAt;
+    let createdAt     = req.params.createdAt;
     let oldPersonName = req.params.personName.trim();
     let newPersonName = req.body.newPersonName.trim();
 
@@ -131,8 +130,8 @@ const modifyPerson = async (req, res, next) => {
 
 const renderEventForm = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let personName = req.query.personName ? req.query.personName.trim() : null;
-    let bagId = req.query.bagId ? req.query.bagId.trim() : null;
+    let personName    = req.query.personName ? req.query.personName.trim() : null;
+    let bagId         = req.query.bagId ? req.query.bagId.trim() : null;
     let lastEventType = req.query.lastEventType ? req.query.lastEventType.trim() : null;
 
     res.render("washDays/addPersonToWashdayForm", {
@@ -148,7 +147,7 @@ const renderEventForm = async (req, res, next) => {
 };
 
 const renderBagForm = async (req, res, next) => {
-    let bagId = req.params.bagId;
+    let bagId         = req.params.bagId;
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
 
     let data = await getEvent("washdays", {
@@ -227,7 +226,7 @@ const renderBagForm = async (req, res, next) => {
 };
 
 const renderModifyPersonForm = async (req, res, next) => {
-    let createdAt = req.params.createdAt;
+    let createdAt  = req.params.createdAt;
     let personName = req.params.personName.trim();
 
     res.render("washDays/modifyPersonForm", {
@@ -241,9 +240,9 @@ const renderModifyPersonForm = async (req, res, next) => {
 
 
 const insertEvent = async (req, res, next) => {
-    let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let personName = req.body.personName.trim();
-    let bagId = req.body.bagId || null;
+    let dateCreatedAt  = normalizeTime(req.params.createdAt).Date;
+    let personName     = req.body.personName.trim();
+    let bagId          = req.body.bagId || null;
     let splitFromBagId = req.body.splitFromBagId || null;
 
     // if this is splitting an existing bag, the writes to the DB and Google sheets are the same
@@ -342,7 +341,7 @@ const insertEvent = async (req, res, next) => {
 
 const getEventsByPerson = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let personName = req.params.personName.trim();
+    let personName    = req.params.personName.trim();
 
     let data = await getEvent("washdays", {
         person_name: personName,
@@ -364,8 +363,8 @@ const getEventsByPerson = async (req, res, next) => {
 
 const getAllEventsByCreatedAtPersonOriented = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let sortColumn = req.query.bagsSortColumn || "person_name";
-    let tileSize = req.query.tileSize || "small";
+    let sortColumn    = req.query.bagsSortColumn || "person_name";
+    let tileSize      = req.query.tileSize || "small";
 
     let aggregatedData = await getAggregatedWashDayData(dateCreatedAt, sortColumn);
 
@@ -386,8 +385,8 @@ const getAllEventsByCreatedAtPersonOriented = async (req, res, next) => {
 
 const getAllEventsByCreatedAtBagOriented = async (req, res, next) => {
     let dateCreatedAt = normalizeTime(req.params.createdAt).Date;
-    let sortColumn = req.query.sortColumn || "person_name";
-    let tileSize = req.query.tileSize || "small";
+    let sortColumn    = req.query.sortColumn || "person_name";
+    let tileSize      = req.query.tileSize || "small";
 
     let aggregatedData = await getAggregatedWashDayData(dateCreatedAt, sortColumn);
 

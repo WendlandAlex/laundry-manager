@@ -1,9 +1,9 @@
 const { bags } = require("../../config");
 const {
-    getWashDayFromMoment,
-    normalizeTime,
-    getFriendlyTimeFromUnixTimestamp
-} = require("../lib/moment-tz");
+          getWashDayFromMoment,
+          normalizeTime,
+          getFriendlyTimeFromUnixTimestamp
+      }        = require("../lib/moment-tz");
 
 const isNotNull = (arg) => {
     return arg != null;
@@ -42,7 +42,7 @@ const arrayLength = (arr) => {
 };
 
 const getBagLastEvent = (arr) => {
-    _top = arr[0];
+    _top        = arr[0];
     columnNames = Object.values(bags.eventTypes).map(i => i.columnName);
 
     for (let [event, value] of Object.entries(_top)) {

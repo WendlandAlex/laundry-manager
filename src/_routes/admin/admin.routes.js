@@ -1,7 +1,7 @@
-const express = require("express");
+const express     = require("express");
 const adminRoutes = express.Router();
 
-const adminControllers = require("./admin.controllers");
+const adminControllers           = require("./admin.controllers");
 const { authenticateAdminToken } = require("../../middleware/auth");
 
 adminRoutes.route("/login")

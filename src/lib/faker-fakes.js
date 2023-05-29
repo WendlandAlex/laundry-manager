@@ -6,7 +6,7 @@ const makeFirstName = (firstNameOpts = {}) => {
 
 const makeFullName = (opts = {}) => {
     let firstNameOpts = opts.firstName || {};
-    let lastNameOpts = opts.lastName || {};
+    let lastNameOpts  = opts.lastName || {};
     return faker.name.firstName(firstNameOpts) + " " + faker.name.lastName(lastNameOpts);
 };
 

@@ -1,26 +1,26 @@
 const {
-    insertEventDb,
-    getEvent
-} = require("../../lib/db");
+          insertEventDb,
+          getEvent
+      }                              = require("../../lib/db");
 const {
-    moment,
-    getCurrentWashDay,
-    normalizeTime
-} = require("../../lib/moment-tz");
+          moment,
+          getCurrentWashDay,
+          normalizeTime
+      }                              = require("../../lib/moment-tz");
 const {
-    spreadsheets,
-    organization,
-    laundromat
-} = require("../../../config");
+          spreadsheets,
+          organization,
+          laundromat
+      }                              = require("../../../config");
 const {
-    dryerIdFromRowColumn,
-    rowColumnFromDryerId
-} = require("../../utils/dryers");
-const { appendEventGoogleSheets } = require("../../lib/google-sheets");
+          dryerIdFromRowColumn,
+          rowColumnFromDryerId
+      }                              = require("../../utils/dryers");
+const { appendEventGoogleSheets }    = require("../../lib/google-sheets");
 const {
-    parseWorking,
-    parseRestarted
-} = require("./events.utils");
+          parseWorking,
+          parseRestarted
+      }                              = require("./events.utils");
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
 const getAllEvents = async (req, res, next) => {
@@ -31,11 +31,11 @@ const getAllEvents = async (req, res, next) => {
 
     data.map(i => {
         let {
-            row,
-            column
-        } = rowColumnFromDryerId(i.dryer_id);
-        i.column = column;
-        i.row = (row == 1) ? "Top" : "Bottom";
+                row,
+                column
+            }         = rowColumnFromDryerId(i.dryer_id);
+        i.column      = column;
+        i.row         = (row == 1) ? "Top" : "Bottom";
         i.workingBool = (i.working == 1) ? true : false;
     });
 
@@ -60,29 +60,29 @@ const getEventsByDryerId = async (req, res, next) => {
 };
 
 const renderForm = async (req, res) => {
-    let row = null
+    let row = null;
     if (req.query.row) {
-        row = req.query.row.toLowerCase()
+        row = req.query.row.toLowerCase();
     } else if (req.query.Row) {
-        row = req.query.Row.toLowerCase()
+        row = req.query.Row.toLowerCase();
     }
 
-    let column = null
+    let column = null;
     if (req.query.column) {
-        column = req.query.column
+        column = req.query.column;
     } else if (req.query.Column) {
-        column = req.query.Column
+        column = req.query.Column;
     }
 
     let dryer_id = dryerIdFromRowColumn(row, column);
 
-    let textFields = [
+    let textFields     = [
         "error_code", "notes"
     ];
     let checkboxFields = [
         "restarted", "working"
     ];
-    let formSchema = {
+    let formSchema     = {
         textFields: textFields,
         checkboxFields: checkboxFields
     };
@@ -99,13 +99,13 @@ const renderForm = async (req, res) => {
 };
 
 const insertOneEvent = async (req, res, next) => {
-    let dryerId = dryerIdFromRowColumn(req.body.row, req.body.column);
-    let active = 1;
-    let restarts = parseRestarted(req.body.restarted || 0);
-    let errorCode = req.body.error_code || null;
+    let dryerId            = dryerIdFromRowColumn(req.body.row, req.body.column);
+    let active             = 1;
+    let restarts           = parseRestarted(req.body.restarted || 0);
+    let errorCode          = req.body.error_code || null;
     let timestampCreatedAt = normalizeTime(req.body.createdAt || getCurrentWashDay()).ISOString;
-    let working = parseWorking(req.body.working || 0);
-    let notes = req.body.notes || "";
+    let working            = parseWorking(req.body.working || 0);
+    let notes              = req.body.notes || "";
 
     let payload = {
         active: active,

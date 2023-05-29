@@ -1,16 +1,16 @@
 const {
-    laundromat,
-    organization,
-    bags
-} = require("../../config");
+          laundromat,
+          organization,
+          bags
+      } = require("../../config");
 
 const injectCommonViewAttributes = (req, res) => {
     let {
-        baseUrl,
-        path,
-        query,
-        params
-    } = req;
+            baseUrl,
+            path,
+            query,
+            params
+        } = req;
     return {
         laundromat,
         organization,

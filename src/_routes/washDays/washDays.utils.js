@@ -1,15 +1,15 @@
 const {
-    db
-} = require("../../lib/db");
+          db
+      }                                                 = require("../../lib/db");
 const { updateDiscontinuousRangesOfEventsGoogleSheets } = require("../../lib/google-sheets");
 const {
-    spreadsheets,
-    bags
-} = require("../../../config");
-const { getRandomStepBetween } = require("../../utils/dataManipulation");
+          spreadsheets,
+          bags
+      }                                                 = require("../../../config");
+const { getRandomStepBetween }                          = require("../../utils/dataManipulation");
 const {
-    normalizeTime
-} = require("../../lib/moment-tz");
+          normalizeTime
+      }                                                 = require("../../lib/moment-tz");
 
 const getPersonHavingBagId = async (createdAt, bagId) => {
     let dateCreatedAt = normalizeTime(createdAt).Date;
@@ -49,9 +49,9 @@ const changePersonName = async (createdAt, oldPersonName, newPersonName) => {
 
 const updateBagById = async (createdAt, oldBagId, newBagId) => {
     let {
-        Date: dateCreatedAt,
-        ISOString: timestampCreatedAt,
-    } = normalizeTime(createdAt);
+            Date: dateCreatedAt,
+            ISOString: timestampCreatedAt,
+        } = normalizeTime(createdAt);
 
     // TODO: extract me
     let _decrementBagColumns = () => {
@@ -132,7 +132,7 @@ const getNextAvailBagId = async (createdAt) => {
     let dateCreatedAt = normalizeTime(createdAt).Date;
 
     while (true) {
-        startingId = Math.floor(Math.random() * (9999 - 1001) + 1001)
+        startingId = Math.floor(Math.random() * (9999 - 1001) + 1001);
 
         let data = await db.select("bag_id")
                            .from("washdays")

@@ -1,14 +1,14 @@
-const { db } = require("../lib/db");
+const { db }             = require("../lib/db");
 const {
-    rowColumnFromDryerId,
-    dryerIdFromRowColumn
-} = require("../utils/dryers");
+          rowColumnFromDryerId,
+          dryerIdFromRowColumn
+      }                  = require("../utils/dryers");
 const { getLaundryMoji } = require("../../config");
 
 // keep as legacy example of what the logic *would do* if we
 // used sql to materialize the dashboard
 const getLastStatusAllDryers = async () => {
-    let res = {};
+    let res  = {};
     let rows = await db.raw(
         `select e.dryer_id, e.working as working
         from events e
@@ -30,7 +30,7 @@ const getLastStatusAllDryers = async () => {
 };
 
 const partitionBy = (arr, size) => {
-    let res = [];
+    let res       = [];
     let chunkSize = Math.floor(arr.length / size);
 
     for (let i = 0; i < arr.length; i += chunkSize) {

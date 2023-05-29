@@ -3,7 +3,7 @@ const camelCaseToSnakeCase = (string) => {
 };
 const snakeCaseToCamelCase = (str) => {
     let res = [];
-    str = str.split("_");
+    str     = str.split("_");
     str.map((i, idx) => {
         if (idx == 0) {
             res.push(i);

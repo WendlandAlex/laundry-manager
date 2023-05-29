@@ -1,11 +1,11 @@
 const { findLastNonZeroKeyOf } = require("../utils/dataManipulation");
-const { db } = require("../lib/db");
+const { db }                   = require("../lib/db");
 const {
-    normalizeTime,
-} = require("../lib/moment-tz");
+          normalizeTime,
+      }                        = require("../lib/moment-tz");
 const {
-    bags
-} = require("../../config");
+          bags
+      }                        = require("../../config");
 
 // TODO: can you get this as a SQL query too?
 const aggregateWashDayEventsByPerson = (data) => {
@@ -58,7 +58,7 @@ const aggregateWashDayEventsByPerson = (data) => {
             _agg[bags_x] += row[bags_x];
         }
 
-        aggregatedData.people[_personName].lastStatus = findLastNonZeroKeyOf(_agg) || "No bags accepted";
+        aggregatedData.people[_personName].lastStatus    = findLastNonZeroKeyOf(_agg) || "No bags accepted";
         aggregatedData.people[_personName].aggregateKeys = Object.keys(_agg);
         aggregatedData.people[_personName].events.push(row);
     });
@@ -68,7 +68,7 @@ const aggregateWashDayEventsByPerson = (data) => {
     // iterate over the aggregated data to get a time-insensitive count of bags and statuses
     for (let [key, value] of Object.entries(aggregatedData.people)) {
         _personName = key;
-        _agg = value.aggregates;
+        _agg        = value.aggregates;
 
         if (_agg.bags_completed >= _agg.bags_accepted) {
             !aggregatedData.peopleComplete.includes(_personName) && aggregatedData.peopleComplete.push(_personName);
@@ -119,8 +119,8 @@ const aggregateWashDayEventsByStatus = (data) => {
 
 const getAggregatedWashDayDataPersonOriented = async (createdAt) => {
     let {
-        Date: dateCreatedAt,
-    } = normalizeTime(createdAt);
+            Date: dateCreatedAt,
+        } = normalizeTime(createdAt);
 
     let personData = await db.select("*")
                              .from("washdays")
@@ -139,8 +139,8 @@ const getAggregatedWashDayDataPersonOriented = async (createdAt) => {
 
 const getAggregatedWashDayDataBagOriented = async (createdAt, sortColumn) => {
     let {
-        Date: dateCreatedAt,
-    } = normalizeTime(createdAt);
+            Date: dateCreatedAt,
+        } = normalizeTime(createdAt);
 
     let bagStatuses = await db.raw(`
 SELECT
@@ -183,8 +183,8 @@ ORDER BY washdays.${sortColumn}`, { dateCreatedAt: dateCreatedAt });
 
 const getAggregatedWashDayData = async (createdAt, sortColumn) => {
     let {
-        Date: dateCreatedAt,
-    } = normalizeTime(createdAt);
+            Date: dateCreatedAt,
+        } = normalizeTime(createdAt);
 
     if (!sortColumn) {
         sortColumn = "person_name";
@@ -192,9 +192,9 @@ const getAggregatedWashDayData = async (createdAt, sortColumn) => {
 
     let personData = await getAggregatedWashDayDataPersonOriented(dateCreatedAt);
     let {
-        bagStatuses,
-        bagsLastStatuses
-    } = await getAggregatedWashDayDataBagOriented(dateCreatedAt, sortColumn);
+            bagStatuses,
+            bagsLastStatuses
+        }          = await getAggregatedWashDayDataBagOriented(dateCreatedAt, sortColumn);
 
     let result = {
         bags: aggregateWashDayEventsByBag(bagsLastStatuses),
@@ -205,17 +205,17 @@ const getAggregatedWashDayData = async (createdAt, sortColumn) => {
         bagStatuses: bagStatuses, ...result
     };
 };
-const getWashDays = async (createdAt = undefined) => {
+const getWashDays              = async (createdAt = undefined) => {
     if (createdAt) {
         createdAt = normalizeTime(createdAt).Date;
     }
 
-/* cte_people */
+    /* cte_people */
 // for each washday, get the count of
 //     people with more accepted than completed bags (incomplete)
 //     people with equal or greater completed bags than accepted bags (complete)
 
-/* cte_bags */
+    /* cte_bags */
 // for each washday, get get the count of
 //     bags that recorded an event in each status
 

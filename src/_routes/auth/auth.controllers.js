@@ -1,23 +1,23 @@
 const {
-    laundromat,
-    organization,
-} = require("../../../config");
+          laundromat,
+          organization,
+      }                              = require("../../../config");
 const {
-    bakeUserCookie,
-    defaultCookieOpts
-} = require("../../lib/auth");
+          bakeUserCookie,
+          defaultCookieOpts
+      }                              = require("../../lib/auth");
 const {
-    getCurrentWashDay,
-    normalizeTime,
-} = require("../../lib/moment-tz");
+          getCurrentWashDay,
+          normalizeTime,
+      }                              = require("../../lib/moment-tz");
 const {
-    insertUserRequest,
-    getUserRequestsNotAuthorized,
-} = require("./auth.utils");
+          insertUserRequest,
+          getUserRequestsNotAuthorized,
+      }                              = require("./auth.utils");
 const { injectCommonViewAttributes } = require("../../utils/viewRendering");
 
 const renderUserAccessRequestForm = async (req, res, next) => {
-    let dateCreatedAt= normalizeTime(req.params.createdAt || getCurrentWashDay()).Date;
+    let dateCreatedAt = normalizeTime(req.params.createdAt || getCurrentWashDay()).Date;
 
     let redirectTo = req.query.redirectTo;
 
@@ -34,15 +34,15 @@ const renderUserAccessRequestForm = async (req, res, next) => {
 // an admin must approve a request, and then when they poll for updates
 // they will catch or not catch the token [depending on if the request has been approved]
 const submitUserAccessRequestForm = async (req, res, next) => {
-    let ip = (req._remoteAddress);
-    let ua = (req.headers[`user-agent`]);
+    let ip          = (req._remoteAddress);
+    let ua          = (req.headers[`user-agent`]);
     let redirectUrl = "/washdays";
 
     let {
-        userUsername,
-        createdAt,
-        redirectTo
-    } = req.body;
+            userUsername,
+            createdAt,
+            redirectTo
+        } = req.body;
 
     let dateCreatedAt = normalizeTime(createdAt).Date;
 
