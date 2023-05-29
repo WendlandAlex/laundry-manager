@@ -25,7 +25,7 @@
     "db:up": "./node_modules/knex/bin/cli.js migrate:latest",
     "db:seed": "node startup.js",
     "app:start": "node app.js",
-    "app:dev": "LOCALDEV=true yarn db:down && LOCALDEV=true yarn db:up && LOCALDEV=true yarn db:seed && LOCALDEV=true node_modules/nodemon/bin/nodemon.js app.js"
+    "app:dev": "LOCALDEV=true yarn db:seed && LOCALDEV=true node_modules/nodemon/bin/nodemon.js app.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

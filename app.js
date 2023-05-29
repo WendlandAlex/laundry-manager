@@ -21,7 +21,7 @@ app.engine("hbs", hbs.engine({
                                  partialsDir: path.join(__dirname, "/src/_views/_common/partials/"),
                                  helpers: {
                                      ...require("./src/utils/stringFormatting"), ...require("./src/utils/viewRendering"), ...require(
-                                         "./src/helpers")
+                                         "./src/utils/events"), ...require("./src/helpers")
                                  }
                              }));
 app.set("view engine", "hbs");

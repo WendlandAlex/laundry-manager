@@ -6,10 +6,7 @@ const {
           spreadsheets,
           bags
       }                                                 = require("../../../config");
-const { getRandomStepBetween }                          = require("../../utils/dataManipulation");
-const {
-          normalizeTime
-      }                                                 = require("../../lib/moment-tz");
+const { normalizeTime }                                 = require("../../lib/moment-tz");
 
 const getPersonHavingBagId = async (createdAt, bagId) => {
     let dateCreatedAt = normalizeTime(createdAt).Date;
@@ -31,17 +28,40 @@ const getPersonHavingBagId = async (createdAt, bagId) => {
 const changePersonName = async (createdAt, oldPersonName, newPersonName) => {
     let dateCreatedAt = normalizeTime(createdAt).Date;
 
-    let data = await db("washdays").update({ person_name: newPersonName })
+    let data = await db("washdays").update({
+                                               person_name: newPersonName
+                                           })
                                    .where({
                                               person_name: oldPersonName
                                           })
                                    .andWhereRaw(`date(created_at) = '${dateCreatedAt}'`)
                                    .returning("*");
 
+    // leave a note on every bag recording the person_name it *used to be*
+    let insertNotesOnBagsDistinct = [];
+    let notesData                 = [];
+    data.forEach(i => {
+        !insertNotesOnBagsDistinct.includes(i.bag_id) && insertNotesOnBagsDistinct.push(i.bag_id);
+    });
+
+    if (insertNotesOnBagsDistinct.length) {
+        notesData = await db("washdays")
+            .insert(insertNotesOnBagsDistinct.map(i => {
+                return {
+                    active: 1,
+                    created_at: dateCreatedAt,
+                    person_name: newPersonName,
+                    bag_id: i,
+                    notes: `Renamed from ${oldPersonName}`
+                };
+            }))
+            .returning("*");
+    }
+
     let sheetsResult = await updateDiscontinuousRangesOfEventsGoogleSheets({
                                                                                spreadsheetId: spreadsheets.main.spreadsheetId,
                                                                                tablename: "washdays",
-                                                                               rows: data
+                                                                               rows: [...data, ...notesData]
                                                                            });
 
     return sheetsResult;
@@ -88,6 +108,7 @@ const updateBagById = async (createdAt, oldBagId, newBagId) => {
     let tombstoneRow = await db("washdays").insert({
                                                        bag_id: oldBagId,
                                                        created_at: timestampCreatedAt,
+                                                       active: 1,
                                                        notes: "tombstone"
                                                    })
                                            .returning("*");
